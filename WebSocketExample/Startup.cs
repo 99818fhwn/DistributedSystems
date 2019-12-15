@@ -47,10 +47,11 @@ namespace WebSocketExample
             this.CurrentClients = new ConcurrentBag<ClientSocket>();
             this.BrowserClients = new ConcurrentBag<WebSocket>();
             this.rootPath = env.WebRootPath;
-            WebfileFactory.IndexPath = Path.Combine(this.rootPath, "index2.html");
-            WebfileFactory.ScriptPath = Path.Combine(this.rootPath, "script2.js");
+            WebfileFactory.IndexPath = Path.Combine(this.rootPath, "index.html");
+            WebfileFactory.ScriptPath = Path.Combine(this.rootPath, "script.js");
 
-            WebfileFactory.GenerateFiles(this.CurrentClients);
+
+            WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
 
             if (env.IsDevelopment())
             {
@@ -155,7 +156,7 @@ namespace WebSocketExample
                 clientSocket.Adapter = foundAdapter;
             }
 
-            WebfileFactory.GenerateFiles(this.CurrentClients);
+            WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
 
             var message = protoObj.BuildProtocollMessage();
 
@@ -242,11 +243,11 @@ namespace WebSocketExample
             byte[] buffer = new byte[1024 * 4];
             WebSocketReceiveResult result;
 
-            foreach (var p in this.Pipelines)
-            {
-                var message = $"add:{p.FromId}-->{p.ToId}";
-                await webSocket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
-            }
+            //foreach (var p in this.Pipelines)
+            //{
+            //    var message = $"add:{p.FromId}-->{p.ToId}";
+            //    await webSocket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+            //}
 
             do
             {
@@ -262,17 +263,13 @@ namespace WebSocketExample
                     if (ids.Length > 1)
                     {
                         var tempL = new List<ClientSocket>(this.CurrentClients);
-                        if (tempL.Where(x => x.UniqueID == ids[0] || x.UniqueID == ids[1]).Count() == 2)
+                        if(true)//if (tempL.Where(x => x.UniqueID == ids[0] || x.UniqueID == ids[1]).Count() == 2)
                         {
                             if (pipeParts[0] == "add")
                             {
                                 this.Pipelines.Add(new Pipeline(ids[0], ids[1]));
 
-                                // Inform all and yourself about the new pipeline
-                                foreach (var ps in this.PiplineSockets)
-                                {
-                                    await ps.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(pipeObj), 0, pipeObj.Length), WebSocketMessageType.Text, true, CancellationToken.None);
-                                }
+                                WebfileFactory.GenerateFiles(this.CurrentClients,this.Pipelines);
                             }
                             if (pipeParts[0] == "delete")
                             {
@@ -287,15 +284,16 @@ namespace WebSocketExample
                                 }
                                 if (foundpipeline != null)
                                 {
-                                    // Inform everyone and yourself to delete the pipeline
-                                    foreach (var ps in this.PiplineSockets)
-                                    {
-                                        await ps.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(pipeObj), 0, pipeObj.Length), WebSocketMessageType.Text, true, CancellationToken.None);
-                                    }
-
+                                    //// Inform everyone and yourself to delete the pipeline
+                                    //foreach (var ps in this.PiplineSockets)
+                                    //{
+                                    //    await ps.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(pipeObj), 0, pipeObj.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                                    //}
                                     this.Pipelines.TryTake(out foundpipeline);
+
+                                    WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
                                 }
-                            } 
+                            }
                         }
                         else
                         {

@@ -15,7 +15,7 @@ namespace WebSocketExample
 
         public static string ScriptPath { get; set; }
 
-        public static void GenerateFiles(IEnumerable<ClientSocket> clients)
+        public static void GenerateFiles(IEnumerable<ClientSocket> clients, IEnumerable<Pipeline> pipelines)
         {
             string indexPage = string.Empty;
 
@@ -25,16 +25,44 @@ namespace WebSocketExample
                                     <meta charset=""utf-8""/>
                                     <title>Devices</title>
                                 </head>
-                                <body>";
+                                <body>
+    <h1>Clients</h1>";
 
             foreach (var c in clients)
             {
-                indexPage += $"<div style=\"border:solid; border-color:black; border-width:2px; padding:2px;\"> \n" +
-                    $"<h3>{c.Name}</h3> \n" +
-                    $"{c.UniqueID} \n" +
-                    $"{c.Adapter.GenerateHTMLCode(c.UniqueID)} \n" +
-                    $"</div> \n";
+                if (c.Adapter != null)
+                {
+                    indexPage += $"<div style=\"border:solid; border-color:black; border-width:2px; padding:2px;\"> \n" +
+    $"<h3>{c.Name}</h3> \n" +
+    $"{c.UniqueID} \n" +
+    $"{c.Adapter.GenerateHTMLCode(c.UniqueID)} \n" +
+    $"</div> \n";
+                }
             }
+
+            indexPage += @"<div style=""border:solid; border-color:black; border-width:2px; padding:2px;"">
+               <h2> Add Pipeline </h2>
+                  <form id=""fromform"">
+                       <input id=""frommessage"" autocomplete=""off""/>
+                      </form>
+                      <form id=""toform"">
+                           <input id =""tomessage"" autocomplete=""off""/>
+                          </form>";
+            indexPage += $"\n <button onclick=\"sendPipeline()\">Add Pipeline</button> \n";
+
+            indexPage += @"<h2> Current Pipelines </h2>
+                             <div id=""pipelineContainer"">
+            <table>
+";
+
+            foreach (var pi in pipelines)
+            {
+                indexPage += $"<tr><th>{pi.FromId}-->{pi.ToId}</th><th><button onclick=\"sendDelete('{pi.FromId}-->{pi.ToId}')\">Delete</button></th></tr>\n";
+            }
+
+            indexPage += @"</table>
+                           </div>
+                         </div>";
 
             indexPage += @"<script src=""script.js""></script>
                            </body>
@@ -64,8 +92,8 @@ namespace WebSocketExample
             string scripFile = string.Empty;
 
             scripFile += @"(function () {
-    var webSocketProtocol = location.protocol == ""https: "" ? ""wss: "" : ""ws: "";
-    var webSocketURI = webSocketProtocol + ""//"" + location.host + ""/ws"";
+    var webSocketProtocol = location.protocol == ""https:"" ? ""wss:"" : ""ws:"";
+    var webSocketURI = webSocketProtocol + ""//"" + location.host + ""/bs"";
 
             socket = new WebSocket(webSocketURI);
 
@@ -95,15 +123,64 @@ namespace WebSocketExample
         console.log(""Error: "" + error.message);
     };" +
     sendFromIdFunc +
-    @" 
-    var form = document.getElementById('form');
-    var message = document.getElementById('message');
-    form.onsubmit = function () {
-        socket.send(message.value);
-        message.value = '';
-        return false;
+    //@" 
+    //var form = document.getElementById('form');
+    //var message = document.getElementById('message');
+    //form.onsubmit = function () {
+    //    socket.send(message.value);
+    //    message.value = '';
+    //    return false;
+    //};
+
+    @"var pipesocketURI = webSocketProtocol + ""//"" + location.host + ""/ps"";
+    psocket = new WebSocket(pipesocketURI);
+
+            psocket.onopen = function() {
+                console.log(""Connected pipeline."");
+            };
+
+            psocket.onclose = function(event) {
+            if (event.wasClean) {
+            console.log('Disconnected pipeline.');
+        } else {
+            console.log('Connection lost pipeline.'); // for example if server processes is killed
+        }
+        console.log('Code: ' + event.code + '. Reason: ' + event.reason);
+        };
+
+    psocket.onmessage = function(event) {
+            console.log(""Received pipeline: \n"" + event.data);
+        var msg = event.data;
+        var error = msg.split(':')[1];
+        console.log(error);
     };
-    })();";
+
+    psocket.onerror = function(error)
+    {
+        console.log(""Error: "" + error.message);
+    };
+    })();
+    function sendPipeline()
+    {
+        var frommessage = document.getElementById('frommessage');
+        var tomessage = document.getElementById('tomessage');
+        var str = ""add:"" + frommessage.value + ""-->"" + tomessage.value;
+        frommessage.value = '';
+        tomessage.value = '';
+        psocket.send(str);
+        setTimeout(function() {
+        location.reload();
+        }, 500)
+    }
+
+    function sendDelete(ids)
+    {
+        var str = ""delete:"" + ids;
+        psocket.send(str);
+        setTimeout(function() {
+        location.reload();
+        }, 500);
+    }";
 
             lock (scriptLock)
             {

@@ -1,14 +1,47 @@
- <!DOCTYPE html>
-                            <html>
-                                <head>
-                                    <meta charset="utf-8"/>
-                                    <title>Devices</title>
-                                </head>
-                                <body><div style="border:solid; border-color:black; border-width:2px; padding:2px;"> 
-<h3>testNaaaaaaaame</h3> 
-92cdeeaa-68ea-41ca-8bbe-d0d835c89464 
- 
-</div> 
-<script src="script.js"></script>
-                           </body>
-                           </html>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <title>Devices</title>
+
+    <style>
+
+        html, body, form, input {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        input {
+            display: block;
+            text-align: center;
+            font-size: 24px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Changed Something</h1>
+    <form id="form">
+        <input id="message" autocomplete="off" />
+    </form>
+
+    <div style="border:solid; border-color:black; border-width:2px; padding:2px;">
+        <h2> Add Pipeline </h2>
+        <form id="fromform">
+            <input id="frommessage" autocomplete="off" />
+        </form>
+        <form id="toform">
+            <input id="tomessage" autocomplete="off" />
+        </form>
+        <button onclick="sendPipeline()">Add Pipeline</button>
+        <h2> Current Pipelines </h2>
+        <div id="pipelineContainer">
+            <table></table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
