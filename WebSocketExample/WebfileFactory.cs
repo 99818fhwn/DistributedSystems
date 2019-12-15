@@ -29,7 +29,7 @@ namespace WebSocketExample
 
             foreach (var c in clients)
             {
-                indexPage += $"<div style=\"border: solid; border - color:black; border - width:2px; padding: 2px;\"> \n" +
+                indexPage += $"<div style=\"border:solid; border-color:black; border-width:2px; padding:2px;\"> \n" +
                     $"<h3>{c.Name}</h3> \n" +
                     $"{c.UniqueID} \n" +
                     $"{c.Adapter.GenerateHTMLCode(c.UniqueID)} \n" +

@@ -5,3 +5,11 @@ D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET
 D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\WebAdapterLibrary\bin\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
 D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.dll
 D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
+C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\bin\Debug\netcoreapp3.1\WebAdapterLibrary.deps.json
+C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\bin\Debug\netcoreapp3.1\WebAdapterLibrary.dll
+C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\bin\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
+C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.csprojAssemblyReference.cache
+C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.AssemblyInfoInputs.cache
+C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.AssemblyInfo.cs
+C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.dll
+C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.pdb

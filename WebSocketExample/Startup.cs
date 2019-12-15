@@ -20,6 +20,8 @@ namespace WebSocketExample
     public class Startup
     {
 
+        public ConcurrentBag<WebSocket> BrowserClients { get; set; }
+
         public ConcurrentBag<ClientSocket> CurrentClients { get; set; }
 
         public string rootPath { get; set; }
@@ -37,6 +39,7 @@ namespace WebSocketExample
         {
             this.WebAdapters = new List<IWebAdapterAble>();
             this.CurrentClients = new ConcurrentBag<ClientSocket>();
+            this.BrowserClients = new ConcurrentBag<WebSocket>();
             this.rootPath = env.WebRootPath;
             WebfileFactory.IndexPath = Path.Combine(this.rootPath, "index2.html");
             WebfileFactory.ScriptPath = Path.Combine(this.rootPath, "script2.js");
@@ -68,6 +71,7 @@ namespace WebSocketExample
                         this.CurrentClients.TryTake(out client);
                         return;
                     }
+
                     await next();
                 });
             });
@@ -83,6 +87,31 @@ namespace WebSocketExample
 
             // Set serverside Identifier
             protoObj.Identifier = clientSocket.UniqueID;
+            clientSocket.Name = protoObj.Name;
+
+            IWebAdapterAble foundAdapter = null;
+
+            foreach (var adapt in this.WebAdapters)
+            {
+                if (adapt.AdapterName == protoObj.Adapter)
+                {
+                    foundAdapter = adapt;
+                    break;
+                }
+            }
+
+            if (foundAdapter == null)
+            {
+                clientSocket.Socket.CloseAsync(WebSocketCloseStatus.ProtocolError, "No matching adapter found", CancellationToken.None).Wait(5000);
+                return;
+            }
+            else
+            {
+                clientSocket.Adapter = foundAdapter;
+            }
+
+            WebfileFactory.GenerateFiles(this.CurrentClients);
+
             var message = protoObj.BuildProtocollMessage();
 
             // Inform device about its number
@@ -91,31 +120,63 @@ namespace WebSocketExample
             while (!result.CloseStatus.HasValue)
             {
 
-                await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
                 result = await clientSocket.Socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                Console.WriteLine(this.DecodeByteArray(buffer, result.Count));
+                Console.WriteLine(this.DecodeByteArray(buffer, result.Count) + "++++++++++++++++++++++++++++++++++++++++++++");
+
+                // Create new ProtocollObject from the clients message
+                protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
+                // Set serverside Identifier
+                protoObj.Identifier = clientSocket.UniqueID;
                 
+                await this.DistributeToBrowserClients(protoObj).ConfigureAwait(false);
+
+                //await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
+
             }
 
             await clientSocket.Socket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
         }
 
-        private async Task ClientDevice2(ClientSocket clientSocket)
+        private async Task DistributeToBrowserClients(ProtocollObject protoObj)
+        {
+            ////await Task.Delay(5000);
+            var message = protoObj.BuildProtocollMessage();
+
+            foreach (var bc in this.BrowserClients)
+            {
+                await bc.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+        }
+
+        private async Task BrowserDevices(WebSocket webSocket)
         {
             byte[] buffer = new byte[1024 * 4];
-            var result = await clientSocket.Socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            Console.WriteLine(this.DecodeByteArray(buffer, result.Count));
-            while (!result.CloseStatus.HasValue)
+            WebSocketReceiveResult result;
+
+            do
             {
-                string message = clientSocket.UniqueID;
-                await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
-                result = await clientSocket.Socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                Console.WriteLine(this.DecodeByteArray(buffer, result.Count));
-                var hmm = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
+                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                var protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
+                
             }
-            await clientSocket.Socket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+            while (!result.CloseStatus.HasValue);
+
+            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
         }
-        
+
+        private async Task InformCorrespondingClient(ProtocollObject protoObj)
+        {
+            var message = protoObj.BuildProtocollMessage();
+
+            foreach (var c in this.CurrentClients)
+            {
+                if (protoObj.Identifier == c.UniqueID)
+                {
+                    await c.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+            }
+        }
+
 
         private void LoadAdapterAssemblies()
         {

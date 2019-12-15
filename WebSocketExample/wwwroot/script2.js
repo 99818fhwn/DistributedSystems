@@ -21,12 +21,18 @@
             console.log("Received: \n" + event.data);
         var msg = event.data;
         var identifier = msg.split(';').filter(part => part.includes('identifier:'))[0].split(':')[1];
-        console.log(identifier); };
+        console.log(identifier); 
+ if(identifier == 92cdeeaa-68ea-41ca-8bbe-d0d835c89464){ 
+ 
+
+}};
 
     socket.onerror = function(error)
     {
         console.log("Error: " + error.message);
-    }; 
+    };
+  
+ 
     var form = document.getElementById('form');
     var message = document.getElementById('message');
     form.onsubmit = function () {

@@ -952,11 +952,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj",
+      "projectUniqueName": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj",
       "projectName": "WebSocketExample",
-      "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj",
+      "projectPath": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj",
       "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\obj\\",
+      "outputPath": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebSocketExample\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -977,8 +977,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
-              "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
+            "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+              "projectPath": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
             }
           }
         }
