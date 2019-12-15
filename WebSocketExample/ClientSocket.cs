@@ -18,5 +18,7 @@ namespace WebSocketExample
 
         public string Name { get; set; }
 
+        public ProtocollObject LastProtoObj { get; set; }
+
     }
 }

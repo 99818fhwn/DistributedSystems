@@ -14,6 +14,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
 using System.ComponentModel.Composition;
+using System.Linq;
 
 namespace WebSocketExample
 {
@@ -21,6 +22,8 @@ namespace WebSocketExample
     {
 
         public ConcurrentBag<WebSocket> BrowserClients { get; set; }
+
+        public ConcurrentBag<WebSocket> PiplineSockets { get; set; }
 
         public ConcurrentBag<ClientSocket> CurrentClients { get; set; }
 
@@ -30,6 +33,7 @@ namespace WebSocketExample
 
         [ImportMany]
         public ICollection<IWebAdapterAble> WebAdapters { get; set; }
+        public ConcurrentBag<Pipeline> Pipelines { get; private set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -37,6 +41,8 @@ namespace WebSocketExample
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            this.PiplineSockets = new ConcurrentBag<WebSocket>();
+            this.Pipelines = new ConcurrentBag<Pipeline>();
             this.WebAdapters = new List<IWebAdapterAble>();
             this.CurrentClients = new ConcurrentBag<ClientSocket>();
             this.BrowserClients = new ConcurrentBag<WebSocket>();
@@ -76,6 +82,44 @@ namespace WebSocketExample
                 });
             });
 
+            app.Map("/bs", builder =>
+            {
+                builder.Use(async (context, next) =>
+                {
+                    if (context.WebSockets.IsWebSocketRequest)
+                    {
+                        var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                        this.BrowserClients.Add(webSocket);
+                        await this.BrowserDevices(webSocket);
+
+                        // Device disconected -> remove and update
+                        this.BrowserClients.TryTake(out webSocket);
+                        return;
+                    }
+
+                    await next();
+                });
+            });
+
+            app.Map("/ps", builder =>
+            {
+                builder.Use(async (context, next) =>
+                {
+                    if (context.WebSockets.IsWebSocketRequest)
+                    {
+                        var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                        this.PiplineSockets.Add(webSocket);
+                        await this.ListenPipelines(webSocket);
+
+                        // Device disconected -> remove and update
+                        this.PiplineSockets.TryTake(out webSocket);
+                        return;
+                    }
+
+                    await next();
+                });
+            });
+
             this.LoadAdapterAssemblies();
         }
 
@@ -88,6 +132,7 @@ namespace WebSocketExample
             // Set serverside Identifier
             protoObj.Identifier = clientSocket.UniqueID;
             clientSocket.Name = protoObj.Name;
+            clientSocket.LastProtoObj = protoObj;
 
             IWebAdapterAble foundAdapter = null;
 
@@ -127,14 +172,36 @@ namespace WebSocketExample
                 protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
                 // Set serverside Identifier
                 protoObj.Identifier = clientSocket.UniqueID;
-                
+                clientSocket.LastProtoObj = protoObj;
+
+                // Update value of webpage and inform pipeline targets
                 await this.DistributeToBrowserClients(protoObj).ConfigureAwait(false);
+                await this.UsePipelines(protoObj);
 
                 //await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
 
             }
 
             await clientSocket.Socket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+        }
+
+        private async Task UsePipelines(ProtocollObject protoObj)
+        {
+            var message = protoObj.BuildProtocollMessage();
+
+            foreach (Pipeline pipe in this.Pipelines)
+            {
+                if (pipe.FromId == protoObj.Identifier)
+                {
+                    foreach (var c in this.CurrentClients)
+                    {
+                        if (c.UniqueID == pipe.ToId)
+                        {
+                            await c.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                        }
+                    }
+                }
+            }
         }
 
         private async Task DistributeToBrowserClients(ProtocollObject protoObj)
@@ -153,11 +220,90 @@ namespace WebSocketExample
             byte[] buffer = new byte[1024 * 4];
             WebSocketReceiveResult result;
 
+            foreach (var c in this.CurrentClients)
+            {
+                var message = c.LastProtoObj.BuildProtocollMessage();
+                await webSocket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+
             do
             {
                 result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                 var protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
-                
+                await this.InformCorrespondingClient(protoObj);
+            }
+            while (!result.CloseStatus.HasValue);
+
+            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+        }
+
+        private async Task ListenPipelines(WebSocket webSocket)
+        {
+            byte[] buffer = new byte[1024 * 4];
+            WebSocketReceiveResult result;
+
+            foreach (var p in this.Pipelines)
+            {
+                var message = $"add:{p.FromId}-->{p.ToId}";
+                await webSocket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+
+            do
+            {
+                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                var pipeObj = this.DecodeByteArray(buffer, result.Count);
+
+                var pipeParts = pipeObj.Split(":");
+                if (pipeParts.Length > 1)
+                {
+                    var ids = pipeParts[1].Split("-->");
+
+                    if (ids.Length > 1)
+                    {
+                        var tempL = new List<ClientSocket>(this.CurrentClients);
+                        if (tempL.Where(x => x.UniqueID == ids[0] || x.UniqueID == ids[1]).Count() == 2)
+                        {
+                            if (pipeParts[0] == "add")
+                            {
+                                this.Pipelines.Add(new Pipeline(ids[0], ids[1]));
+
+                                // Inform all and yourself about the new pipeline
+                                foreach (var ps in this.PiplineSockets)
+                                {
+                                    await ps.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(pipeObj), 0, pipeObj.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                                }
+                            }
+                            if (pipeParts[0] == "delete")
+                            {
+                                Pipeline foundpipeline = null;
+                                foreach (var p in this.Pipelines)
+                                {
+                                    if (p.FromId == ids[0] && p.ToId == ids[1])
+                                    {
+                                        foundpipeline = p;
+                                        break;
+                                    }
+                                }
+                                if (foundpipeline != null)
+                                {
+                                    // Inform everyone and yourself to delete the pipeline
+                                    foreach (var ps in this.PiplineSockets)
+                                    {
+                                        await ps.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(pipeObj), 0, pipeObj.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                                    }
+
+                                    this.Pipelines.TryTake(out foundpipeline);
+                                }
+                            } 
+                        }
+                        else
+                        {
+                            var errormsg = "error:No matching ids found";
+                            await webSocket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(errormsg), 0, errormsg.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                        }
+                    }
+                }
             }
             while (!result.CloseStatus.HasValue);
 
