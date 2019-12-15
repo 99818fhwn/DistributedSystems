@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\ExampleAdapter\\ExampleAdapter.csproj": {}
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj": {}
   },
   "projects": {
-    "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\ExampleAdapter\\ExampleAdapter.csproj": {
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\ExampleAdapter\\ExampleAdapter.csproj",
+        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj",
         "projectName": "ExampleAdapter",
-        "projectPath": "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\ExampleAdapter\\ExampleAdapter.csproj",
+        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj",
         "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
-        "outputPath": "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\ExampleAdapter\\obj\\",
+        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -32,8 +32,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
-                "projectPath": "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
+              "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+                "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
               }
             }
           }
@@ -65,14 +65,14 @@
         }
       }
     },
-    "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
         "projectName": "WebAdapterLibrary",
-        "projectPath": "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
         "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
-        "outputPath": "D:\\user\\wef\\smart_folder\\Downloads\\ASP.NET-Core-WebSocket-Example-master\\ASP.NET-Core-WebSocket-Example-master\\WebAdapterLibrary\\obj\\",
+        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
