@@ -1,0 +1,11 @@
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\bin\Debug\netcoreapp3.1\ExampleAdapter.deps.json
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\bin\Debug\netcoreapp3.1\ExampleAdapter.dll
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\bin\Debug\netcoreapp3.1\ExampleAdapter.pdb
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\bin\Debug\netcoreapp3.1\WebAdapterLibrary.dll
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\bin\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.csprojAssemblyReference.cache
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.AssemblyInfoInputs.cache
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.AssemblyInfo.cs
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.csproj.CopyComplete
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.dll
+D:\user\wef\smart_folder\Downloads\ASP.NET-Core-WebSocket-Example-master\ASP.NET-Core-WebSocket-Example-master\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.pdb
