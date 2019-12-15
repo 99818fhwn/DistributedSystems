@@ -122,8 +122,7 @@ namespace WebSocketExample
     {
         console.log(""Error: "" + error.message);
     };" +
-    sendFromIdFunc +
-    //@" 
+    //@" ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //var form = document.getElementById('form');
     //var message = document.getElementById('message');
     //form.onsubmit = function () {
@@ -181,6 +180,7 @@ namespace WebSocketExample
         location.reload();
         }, 500);
     }";
+            scripFile += sendFromIdFunc;
 
             lock (scriptLock)
             {

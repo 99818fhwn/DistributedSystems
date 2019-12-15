@@ -263,7 +263,7 @@ namespace WebSocketExample
                     if (ids.Length > 1)
                     {
                         var tempL = new List<ClientSocket>(this.CurrentClients);
-                        if(true)//if (tempL.Where(x => x.UniqueID == ids[0] || x.UniqueID == ids[1]).Count() == 2)
+                        if(tempL.Where(x => x.UniqueID == ids[0] || x.UniqueID == ids[1]).Count() == 2)
                         {
                             if (pipeParts[0] == "add")
                             {
