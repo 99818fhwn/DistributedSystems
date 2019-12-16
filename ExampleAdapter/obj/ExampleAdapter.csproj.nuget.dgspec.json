@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj": {}
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj": {
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj",
+        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj",
         "projectName": "ExampleAdapter",
-        "projectPath": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj",
+        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\ExampleAdapter.csproj",
         "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\ExampleAdapter\\obj\\",
+        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\ExampleAdapter\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -32,8 +32,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
-                "projectPath": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
+              "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+                "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
               }
             }
           }
@@ -65,14 +65,14 @@
         }
       }
     },
-    "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
         "projectName": "WebAdapterLibrary",
-        "projectPath": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
         "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wef\\Source\\Repos\\DistributedSystems\\WebAdapterLibrary\\obj\\",
+        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
