@@ -188,8 +188,6 @@ namespace WebSocketExample
 
         private async Task UsePipelines(ProtocollObject protoObj)
         {
-            var message = protoObj.BuildProtocollMessage();
-
             foreach (Pipeline pipe in this.Pipelines)
             {
                 if (pipe.FromId == protoObj.Identifier)
@@ -198,6 +196,8 @@ namespace WebSocketExample
                     {
                         if (c.UniqueID == pipe.ToId)
                         {
+                            var message = protoObj.BuildProtocollMessage() + pipe.AdditionalParams;
+
                             await c.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
                         }
                     }
@@ -253,9 +253,9 @@ namespace WebSocketExample
             {
                 result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
-                var pipeObj = this.DecodeByteArray(buffer, result.Count);
+                var pipeObj = this.DecodeByteArray(buffer, result.Count).Split(";;");
 
-                var pipeParts = pipeObj.Split(":");
+                var pipeParts = pipeObj[0].Split(":");
                 if (pipeParts.Length > 1)
                 {
                     var ids = pipeParts[1].Split("-->");
@@ -263,13 +263,20 @@ namespace WebSocketExample
                     if (ids.Length > 1)
                     {
                         var tempL = new List<ClientSocket>(this.CurrentClients);
-                        if(tempL.Where(x => x.UniqueID == ids[0] || x.UniqueID == ids[1]).Count() == 2)
+                        if (tempL.Where(x => x.UniqueID == ids[0] || x.UniqueID == ids[1]).Count() == 2)
                         {
                             if (pipeParts[0] == "add")
                             {
-                                this.Pipelines.Add(new Pipeline(ids[0], ids[1]));
+                                var additionalParams = string.Empty;
 
-                                WebfileFactory.GenerateFiles(this.CurrentClients,this.Pipelines);
+                                if (pipeObj.Length > 1)
+                                {
+                                    additionalParams = pipeObj[1];
+                                }
+
+                                this.Pipelines.Add(new Pipeline(ids[0], ids[1], additionalParams));
+
+                                WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
                             }
                             if (pipeParts[0] == "delete")
                             {

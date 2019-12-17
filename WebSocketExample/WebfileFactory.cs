@@ -47,7 +47,11 @@ namespace WebSocketExample
                       </form>
                       <form id=""toform"">
                            <input id =""tomessage"" autocomplete=""off""/>
-                          </form>";
+                          </form>
+                    <form id=""additionalParams"">
+             <input id=""additionalParamsmessage"" autocomplete=""off""/>
+            </form>";
+
             indexPage += $"\n <button onclick=\"sendPipeline()\">Add Pipeline</button> \n";
 
             indexPage += @"<h2> Current Pipelines </h2>
@@ -57,7 +61,7 @@ namespace WebSocketExample
 
             foreach (var pi in pipelines)
             {
-                indexPage += $"<tr><th>{pi.FromId}-->{pi.ToId}</th><th><button onclick=\"sendDelete('{pi.FromId}-->{pi.ToId}')\">Delete</button></th></tr>\n";
+                indexPage += $"<tr><th>{pi.FromId}-->{pi.ToId};;{pi.AdditionalParams}</th><th><button onclick=\"sendDelete('{pi.FromId}-->{pi.ToId}')\">Delete</button></th></tr>\n";
             }
 
             indexPage += @"</table>
@@ -163,9 +167,11 @@ namespace WebSocketExample
     {
         var frommessage = document.getElementById('frommessage');
         var tomessage = document.getElementById('tomessage');
-        var str = ""add:"" + frommessage.value + ""-->"" + tomessage.value;
+        var additionalParams = document.getElementById('additionalParamsmessage');
+        var str = ""add:"" + frommessage.value + ""-->"" + tomessage.value + "";;"" + additionalParams.value;
         frommessage.value = '';
         tomessage.value = '';
+        additionalParams.value = '';
         psocket.send(str);
         setTimeout(function() {
         location.reload();

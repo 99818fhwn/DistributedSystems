@@ -58,9 +58,11 @@
     {
         var frommessage = document.getElementById('frommessage');
         var tomessage = document.getElementById('tomessage');
-        var str = "add:" + frommessage.value + "-->" + tomessage.value;
+        var additionalParams = document.getElementById('additionalParamsmessage');
+        var str = "add:" + frommessage.value + "-->" + tomessage.value + ";;" + additionalParams.value;
         frommessage.value = '';
         tomessage.value = '';
+        additionalParams.value = '';
         psocket.send(str);
         setTimeout(function() {
         location.reload();
