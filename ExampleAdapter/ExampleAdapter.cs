@@ -20,7 +20,7 @@ namespace ExampleAdapter
         {
 
             return @"<h2>TurnOn</h2>
-        LightOn: <input type=""checkbox"" id=""checkb" + identifier + @""" onclick=""sendOnOff" + identifier + @"()"">";
+        LightOn: <input type=""checkbox"" id=""checkb" + identifier + @"""onclick=""sendOnOff" + identifier + @"()"">";
         }
 
         public string GenerateScripcodeGet(string identifier)
