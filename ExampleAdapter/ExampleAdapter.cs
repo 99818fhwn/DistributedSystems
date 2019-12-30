@@ -27,7 +27,8 @@ namespace ExampleAdapter
         {
             return $"function changeCBValue{identifier}(msg) {{ \n" +
                 $"    let value = msg.split(';').filter(part => part.includes('brightness:'))[0].split(':')[1];" +
-                $"    document.getElementById('checkb{identifier}').checked = (value == 'true'); \n }}";
+                $"    document.getElementById('checkb{identifier}').checked = (value == 'true'); \n }}" +
+                $"     changeCBValue{identifier}(msg);";
         }
 
         public string GenerateScriptCodeSet(string identifier)
