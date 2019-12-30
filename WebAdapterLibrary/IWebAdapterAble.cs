@@ -15,19 +15,19 @@ namespace WebSocketExample
         /// </summary>
         /// <param name="identifier">The identifier wich will make every element and the functionname distinct.</param>
         /// <returns></returns>
-        string GenerateScripcodeGet(string identifier);
+        string GenerateScriptcodeGet(string identifier);
 
         /// <summary>
         /// The code that sends the text message to the server with all package data information. 
         /// </summary>
         /// <param name="identifier">The identifier wich will make every element and the functionname distinct.</param>
         /// <returns></returns>
-        string GenerateScripCodeSet(string identifier);
+        string GenerateScriptCodeSet(string identifier);
 
         /// <summary>
         /// The html code that will be visible on the index page if a divice hoocks up with the adapter.
         /// </summary>
-        /// <param name="identifier">The identifier wich will make every element and the functionname distinct, in this case every id attibute or used function and so on.</param>
+        /// <param name="identifier">The identifier which will make every element and the functionname distinct, in this case every id attibute or used function and so on.</param>
         /// <returns></returns>
         string GenerateHTMLCode(string identifier);
     }

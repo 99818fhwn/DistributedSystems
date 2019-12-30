@@ -81,8 +81,8 @@ namespace WebSocketExample
 
             foreach (var c in clients)
             {
-                passToIdFunc += $"\n if(identifier == {c.UniqueID}){{ \n" +
-                    $"{c.Adapter.GenerateScripcodeGet(c.UniqueID)} \n" +
+                passToIdFunc += $"\n if(identifier == '{c.UniqueID}'){{ \n" +
+                    $"{c.Adapter.GenerateScriptcodeGet(c.UniqueID)} \n" +
                     $"\n}}";
             }
 
@@ -90,7 +90,7 @@ namespace WebSocketExample
 
             foreach (var c in clients)
             {
-                sendFromIdFunc += $"\n {c.Adapter.GenerateScripCodeSet(c.UniqueID)} \n";
+                sendFromIdFunc += $"\n {c.Adapter.GenerateScriptCodeSet(c.UniqueID)} \n";
             }
 
             string scripFile = string.Empty;

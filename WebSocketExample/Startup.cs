@@ -70,7 +70,7 @@ namespace WebSocketExample
                     if (context.WebSockets.IsWebSocketRequest)
                     {
                         var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        var client = new ClientSocket(webSocket, Guid.NewGuid().ToString());
+                        var client = new ClientSocket(webSocket, Guid.NewGuid().ToString().Replace('-', 'x'));
                         this.CurrentClients.Add(client);
                         await this.ClientDevice(client);
 
@@ -174,12 +174,13 @@ namespace WebSocketExample
                 // Set serverside Identifier
                 protoObj.Identifier = clientSocket.UniqueID;
                 clientSocket.LastProtoObj = protoObj;
+                message = protoObj.BuildProtocollMessage();
 
                 // Update value of webpage and inform pipeline targets
                 await this.DistributeToBrowserClients(protoObj).ConfigureAwait(false);
                 await this.UsePipelines(protoObj);
 
-                //await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
+                await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
 
             }
 
@@ -231,6 +232,9 @@ namespace WebSocketExample
             {
                 result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                 var protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
+
+                var message = protoObj.BuildProtocollMessage();
+                //await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
                 await this.InformCorrespondingClient(protoObj);
             }
             while (!result.CloseStatus.HasValue);

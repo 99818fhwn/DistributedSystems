@@ -1,0 +1,2 @@
+1. disconnected client -> remove from list
+2. when client connects to server and already has id -> server should check if that client already exists in the list and continue working with it (not create new client with new id)

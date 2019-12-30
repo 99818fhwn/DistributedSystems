@@ -1,0 +1,206 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\SoundActuatorAdapter\\SoundActuatorAdapter.csproj": {}
+  },
+  "projects": {
+    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\SoundActuatorAdapter\\SoundActuatorAdapter.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\SoundActuatorAdapter\\SoundActuatorAdapter.csproj",
+        "projectName": "SoundActuatorAdapter",
+        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\SoundActuatorAdapter\\SoundActuatorAdapter.csproj",
+        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
+        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\SoundActuatorAdapter\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+                "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
+              },
+              "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj": {
+                "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "projectName": "WebAdapterLibrary",
+        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
+        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "System.ComponentModel.Composition": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj",
+        "projectName": "WebSocketExample",
+        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj",
+        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
+        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+                "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "NEST": {
+              "target": "Package",
+              "version": "[7.4.1, )"
+            },
+            "System.ComponentModel.Composition": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

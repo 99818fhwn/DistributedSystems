@@ -1,0 +1,17 @@
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\WebSocketExample.exe
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\MotionSensorAdapter.deps.json
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\MotionSensorAdapter.dll
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\MotionSensorAdapter.pdb
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\WebAdapterLibrary.dll
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\WebSocketExample.dll
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\bin\Debug\netcoreapp3.1\WebSocketExample.pdb
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\obj\Debug\netcoreapp3.1\MotionSensorAdapter.csprojAssemblyReference.cache
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\obj\Debug\netcoreapp3.1\MotionSensorAdapter.AssemblyInfoInputs.cache
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\obj\Debug\netcoreapp3.1\MotionSensorAdapter.AssemblyInfo.cs
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\obj\Debug\netcoreapp3.1\MotionSensorAdapter.csproj.CopyComplete
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\obj\Debug\netcoreapp3.1\MotionSensorAdapter.dll
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\MotionSensorAdapter\obj\Debug\netcoreapp3.1\MotionSensorAdapter.pdb

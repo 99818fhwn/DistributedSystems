@@ -13,3 +13,10 @@ C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcore
 C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.AssemblyInfo.cs
 C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.dll
 C:\Users\wef\Source\Repos\DistributedSystems\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\bin\Debug\netcoreapp3.1\WebAdapterLibrary.deps.json
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\bin\Debug\netcoreapp3.1\WebAdapterLibrary.dll
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\bin\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.AssemblyInfoInputs.cache
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.AssemblyInfo.cs
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.dll
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
