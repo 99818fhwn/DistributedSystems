@@ -1,4 +1,5 @@
-﻿using System.Net.WebSockets;
+﻿using System;
+using System.Net.WebSockets;
 
 namespace WebSocketExample
 {
@@ -8,6 +9,7 @@ namespace WebSocketExample
         {
             this.Socket = socket;
             this.UniqueID = uniqueID;
+            this.LastTimeStamp = DateTime.UtcNow;
         }
 
         public WebSocket Socket { get; set; }
@@ -19,6 +21,8 @@ namespace WebSocketExample
         public string Name { get; set; }
 
         public ProtocollObject LastProtoObj { get; set; }
+
+        public DateTime LastTimeStamp { get; set; }
 
     }
 }

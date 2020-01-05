@@ -53,6 +53,33 @@ namespace WebSocketExample
 
             WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
 
+            var testcollection = new ConcurrentBag<object>();
+            object obj = new object();
+            testcollection.Add(obj);
+            testcollection.Add(obj);
+            testcollection.Add(obj);
+
+            //Task.Run(() =>
+            //{
+            //    while (true)
+            //    {
+            //        foreach (var item in testcollection)
+            //        {
+            //            item.ToString();
+            //        }
+            //    }
+            //});
+
+            //Task.Run(() =>
+            //{
+            //    while (true)
+            //    {
+            //        Task.Delay(5000);
+            //        testcollection.TryTake(out obj);
+            //    }
+            //});
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -91,6 +118,14 @@ namespace WebSocketExample
                     {
                         var webSocket = await context.WebSockets.AcceptWebSocketAsync();
                         this.BrowserClients.Add(webSocket);
+
+                        //Task.Run( async () =>
+                        //{
+                        //    await Task.Delay(5000);
+                        //    await webSocket.CloseAsync(WebSocketCloseStatus.Empty,"ForcesClose",CancellationToken.None);
+                        //    this.BrowserClients.TryTake(out webSocket);
+                        //});
+
                         await this.BrowserDevices(webSocket);
 
                         // Device disconected -> remove and update
@@ -122,6 +157,28 @@ namespace WebSocketExample
             });
 
             this.LoadAdapterAssemblies();
+        }
+
+        private void CheckForInactiveSockets(int duration, ClientSocket con)
+        {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    Task.Delay(duration);
+
+                    var currentTime = DateTime.UtcNow;
+                    var oldConnections = new List<ClientSocket>();
+
+
+                    if ((currentTime - con.LastTimeStamp).TotalMinutes > 5.5)
+                    {
+                        con.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
+                        this.CurrentClients.TryTake(out con);
+                        return;
+                    }
+                }
+            });
         }
 
         private async Task ClientDevice(ClientSocket clientSocket)
@@ -163,10 +220,17 @@ namespace WebSocketExample
             // Inform device about its number
             await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
 
+            //Start watcher
+            this.CheckForInactiveSockets(5000, clientSocket);
+
             while (!result.CloseStatus.HasValue)
             {
 
                 result = await clientSocket.Socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+
+                // Refresh last recieved message
+                clientSocket.LastTimeStamp = DateTime.UtcNow;
+
                 Console.WriteLine(this.DecodeByteArray(buffer, result.Count) + "++++++++++++++++++++++++++++++++++++++++++++");
 
                 // Create new ProtocollObject from the clients message
