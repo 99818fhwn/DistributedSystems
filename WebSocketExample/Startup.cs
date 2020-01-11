@@ -103,6 +103,9 @@ namespace WebSocketExample
 
                         // Device disconected -> remove and update
                         this.CurrentClients.TryTake(out client);
+
+                        // Remove old DeviceRepresentation -> override old outdated index and script files
+                        WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
                         return;
                     }
 
@@ -175,6 +178,9 @@ namespace WebSocketExample
                     {
                         con.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
                         this.CurrentClients.TryTake(out con);
+
+                        // Remove old DeviceRepresentation
+                        WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
                         return;
                     }
                 }
