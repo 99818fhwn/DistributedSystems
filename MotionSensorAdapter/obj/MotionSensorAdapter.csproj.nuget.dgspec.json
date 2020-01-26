@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\MotionSensorAdapter\\MotionSensorAdapter.csproj": {}
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\MotionSensorAdapter\\MotionSensorAdapter.csproj": {}
   },
   "projects": {
-    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\MotionSensorAdapter\\MotionSensorAdapter.csproj": {
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\MotionSensorAdapter\\MotionSensorAdapter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\MotionSensorAdapter\\MotionSensorAdapter.csproj",
+        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\MotionSensorAdapter\\MotionSensorAdapter.csproj",
         "projectName": "MotionSensorAdapter",
-        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\MotionSensorAdapter\\MotionSensorAdapter.csproj",
-        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
-        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\MotionSensorAdapter\\obj\\",
+        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\MotionSensorAdapter\\MotionSensorAdapter.csproj",
+        "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\MotionSensorAdapter\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\wef\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -30,11 +32,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
-                "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
+              "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+                "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
               },
-              "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj": {
-                "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj"
+              "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj": {
+                "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj"
               }
             }
           }
@@ -69,21 +71,23 @@
         }
       }
     },
-    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
         "projectName": "WebAdapterLibrary",
-        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
-        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
-        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\obj\\",
+        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\wef\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -130,21 +134,23 @@
         }
       }
     },
-    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj": {
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj",
+        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj",
         "projectName": "WebSocketExample",
-        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj",
-        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
-        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\obj\\",
+        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj",
+        "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\wef\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -156,8 +162,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
-                "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
+              "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+                "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
               }
             }
           }

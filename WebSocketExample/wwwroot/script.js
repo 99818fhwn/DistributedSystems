@@ -21,23 +21,7 @@
             console.log("Received: \n" + event.data);
         var msg = event.data;
         var identifier = msg.split(';').filter(part => part.includes('identifier:'))[0].split(':')[1];
-        console.log(identifier); 
- if(identifier == '3734306dx0592x4ef0x88bax75b8f1ef959d'){ 
-function changeCBValue3734306dx0592x4ef0x88bax75b8f1ef959d(msg) { 
-    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('motionDetDiv3734306dx0592x4ef0x88bax75b8f1ef959d').innerHTML  =     "<p> Motion Detected: " + value + " </p> ";}    changeCBValue3734306dx0592x4ef0x88bax75b8f1ef959d(msg); 
-
-}
- if(identifier == '40f1071cxf9ffx4524xbb3dxa3a38ef092cc'){ 
-function changeCBValue40f1071cxf9ffx4524xbb3dxa3a38ef092cc(msg) { 
-    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('checkb40f1071cxf9ffx4524xbb3dxa3a38ef092cc').checked = (value == '1'); 
- }    changeCBValue40f1071cxf9ffx4524xbb3dxa3a38ef092cc(msg); 
-
-}
- if(identifier == 'b72a6e92x2104x4c5bx88c3x8dbc966eb000'){ 
-function changeCBValueb72a6e92x2104x4c5bx88c3x8dbc966eb000(msg) { 
-    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('motionDetDivb72a6e92x2104x4c5bx88c3x8dbc966eb000').innerHTML  =     "<p> Motion Detected: " + value + " </p> ";}    changeCBValueb72a6e92x2104x4c5bx88c3x8dbc966eb000(msg); 
-
-}};
+        console.log(identifier); };
 
     socket.onerror = function(error)
     {
@@ -93,10 +77,3 @@ function changeCBValueb72a6e92x2104x4c5bx88c3x8dbc966eb000(msg) {
         location.reload();
         }, 500);
     }
-  
-
- function sendOnOff40f1071cxf9ffx4524xbb3dxa3a38ef092cc() { 
-var str = 'identifier:' + '40f1071cxf9ffx4524xbb3dxa3a38ef092cc' + ';;isOn:' + document.getElementById('checkb40f1071cxf9ffx4524xbb3dxa3a38ef092cc').checked;socket.send(str); 
- } 
-
-  

@@ -20,3 +20,14 @@ C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\Examp
 C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.csproj.CopyComplete
 C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.dll
 C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.pdb
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\bin\Debug\netcoreapp3.1\ExampleAdapter.deps.json
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\bin\Debug\netcoreapp3.1\ExampleAdapter.dll
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\bin\Debug\netcoreapp3.1\ExampleAdapter.pdb
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\bin\Debug\netcoreapp3.1\WebAdapterLibrary.dll
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\bin\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.csprojAssemblyReference.cache
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.AssemblyInfoInputs.cache
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.AssemblyInfo.cs
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.csproj.CopyComplete
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.dll
+C:\Users\wef\source\repos\DistributedSystems\ExampleAdapter\obj\Debug\netcoreapp3.1\ExampleAdapter.pdb

@@ -7,3 +7,5 @@ The server dependent part is the string before the ';;' (double semicolon)
 So an example message will look like:
 
 identifier:1234-5672-h1245...;adapter:exampleadapter;name:Myexampledevice;;puttext:helloworld;
+
+The connected devices have to send a message in an intervall under 5 minutes in order to stay connected to the server.
