@@ -76,6 +76,7 @@ namespace WebSocketExample
 
                         // Device disconected -> remove and update
                         this.CurrentClients.TryTake(out client);
+                        WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
                         return;
                     }
 
