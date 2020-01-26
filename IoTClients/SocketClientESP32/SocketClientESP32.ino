@@ -9,13 +9,13 @@
 const int sensorPin = 4; 
 
 //--------- make dynamic?
-const char* ssid = "ALERTA3"; // "root";
-const char* password = "sd98f7sdSD98F7SD"; // "fox4025652000";
+const char* ssid = "Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
+const char* password "Anacardo01"; //"fox4025652000";//"sd98f7sdSD98F7SD"; // 
 
 //------- change ! ip from the laptop where server is running
 const uint16_t port = 5000;
 char* path = "/ws";
-char* host = "192.168.10.56"; // "192.168.0.102";
+char* host = "192.168.10.59"; //"192.168.10.56"; // "192.168.0.102";
 int numOfTries = 0;
 
 WebSocketClient webSocketClient;
@@ -148,7 +148,7 @@ void loop()
         connectToServer();
     }
 
-    delay(5000);
+    delay(500);
 }
 
 bool CheckIfStateChanged()

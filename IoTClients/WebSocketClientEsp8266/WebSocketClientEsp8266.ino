@@ -9,13 +9,13 @@
 const int actuatorPin = 4; 
 
 //--------- make dynamic?
-char* ssid =  "ALERTA3"; //"root"; // 
-const char* password = "sd98f7sdSD98F7SD"; //"fox4025652000"; // 
+const char* ssid = "Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
+const char* password "Anacardo01"; // "sd98f7sdSD98F7SD"; //
 
 //------- change ! ip from the laptop where server is running
 const uint16_t port = 5000;
 char* path = "/ws";
-char* host = "192.168.10.56"; //"192.168.43.5"; // // "192.168.0.102";
+char* host = "192.168.10.59"; //"192.168.10.56"; //"192.168.43.5"; // // "192.168.0.102";
 int numOfTries = 0;
 
 WebSocketClient webSocketClient;
@@ -94,7 +94,7 @@ void loop()
             data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:requestingValue;";
             webSocketClient.sendData(data);
 
-             delay(550);
+            delay(50);
 
             webSocketClient.getData(responsce);
             //webSocketClient.sendData(data);
@@ -135,7 +135,7 @@ void loop()
         connectToServer();
     }
 
-    delay(5000);
+    delay(500);
 }
 
 bool CheckIfStateChanged(int newParameterValue)
