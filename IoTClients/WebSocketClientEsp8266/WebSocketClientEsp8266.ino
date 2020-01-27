@@ -6,16 +6,16 @@
 // on this event method "send data to client" will be called with data 1
 
 //---------- pin
-const int actuatorPin = 4; 
+const int actuatorPin = 4; // D2 pin
 
 //--------- make dynamic?
 const char* ssid = "Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
-const char* password "Anacardo01"; // "sd98f7sdSD98F7SD"; //
+const char* password = "Anacardo01"; // "sd98f7sdSD98F7SD"; //
 
 //------- change ! ip from the laptop where server is running
 const uint16_t port = 5000;
 char* path = "/ws";
-char* host = "192.168.10.59"; //"192.168.10.56"; //"192.168.43.5"; // // "192.168.0.102";
+char* host = "192.168.0.59"; //"192.168.10.56"; //"192.168.43.5"; // // "192.168.0.102";
 int numOfTries = 0;
 
 WebSocketClient webSocketClient;
@@ -26,6 +26,9 @@ String adapterName = "soundaActuatorAdapter";
 int previousParameterValue = 0;
 int parameterValue = 0; // ---> the i/o pin value = parameterValue <<<<<<<<<<<<<<<<<<< 
 // <<<<<<<<<<<<<<<<< if there is a change in io pin  -> update and send data to server
+String data;
+String responsce;
+
 
 void setup()
 {
@@ -46,6 +49,7 @@ void setup()
 
     //---- connect to server 
     connectToServer();
+    delay(500);
 }
 
 void loop()
@@ -55,8 +59,7 @@ void loop()
     // interaption pins?
 
     // ------ use device id and data as parameters
-    String data;
-    String responsce;
+
 
     if (client.connected())
     {
@@ -86,23 +89,28 @@ void loop()
             {
                 Serial.println("responsce is null");
             }
+
+            delay(1000);
         }
         else
         {
             Serial.println("requesting data: ");
             // get data from server and if changed update pin
-            data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:requestingValue;";
-            webSocketClient.sendData(data);
+            // data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:requestingValue;";
+            // webSocketClient.sendData(data);
 
-            delay(50);
+            
 
             webSocketClient.getData(responsce);
+            delay(50);
+
             //webSocketClient.sendData(data);
 
             if (responsce.length() > 0) 
             {
                 if( identifier == GetIdentifier(responsce))
                 {
+                    
                     Serial.print("Received data: ");
                     Serial.println(responsce);
 
@@ -115,15 +123,18 @@ void loop()
                         Serial.println(newValue);
 
                         parameterValue = newValue;
-                        // data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:valuechanged;";
-                        // webSocketClient.sendData(data);
+                        data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:valuechanged;";
+                        webSocketClient.sendData(data);
                         SetActuatorValue(parameterValue);
                     }
                 }
             }
             else
             {
+                // data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:valuechanged;";
+                // webSocketClient.sendData(data);
                 Serial.println("responsce is null");
+                delay(1000);
             }
         }
     }

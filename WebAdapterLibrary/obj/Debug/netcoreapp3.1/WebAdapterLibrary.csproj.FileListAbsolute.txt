@@ -20,3 +20,4 @@ C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAd
 C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.AssemblyInfo.cs
 C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.dll
 C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.pdb
+C:\Katja\Cockroaches\Austria2017\study\3\Verteilte_Systeme\IoTProject_Full\WebAdapterLibrary\obj\Debug\netcoreapp3.1\WebAdapterLibrary.csprojAssemblyReference.cache

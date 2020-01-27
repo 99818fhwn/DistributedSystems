@@ -1,26 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj": {}
+    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
         "projectName": "WebAdapterLibrary",
-        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
-        "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\obj\\",
+        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
+        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\wef\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -67,23 +65,21 @@
         }
       }
     },
-    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj": {
+    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj",
+        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj",
         "projectName": "WebSocketExample",
-        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\WebSocketExample.csproj",
-        "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebSocketExample\\obj\\",
+        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\WebSocketExample.csproj",
+        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
+        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebSocketExample\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\wef\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -95,8 +91,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
-                "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
+              "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+                "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj"
               }
             }
           }

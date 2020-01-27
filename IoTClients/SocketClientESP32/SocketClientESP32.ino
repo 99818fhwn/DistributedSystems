@@ -6,16 +6,16 @@
 // on this event method "send data to client" will be called with data 1
 
 //---------- pin
-const int sensorPin = 4; 
+const int sensorPin = 4; // io4
 
 //--------- make dynamic?
 const char* ssid = "Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
-const char* password "Anacardo01"; //"fox4025652000";//"sd98f7sdSD98F7SD"; // 
+const char* password = "Anacardo01"; //"fox4025652000";//"sd98f7sdSD98F7SD"; // 
 
 //------- change ! ip from the laptop where server is running
 const uint16_t port = 5000;
 char* path = "/ws";
-char* host = "192.168.10.59"; //"192.168.10.56"; // "192.168.0.102";
+char* host = "192.168.0.59"; //"192.168.10.56"; // "192.168.0.102";
 int numOfTries = 0;
 
 WebSocketClient webSocketClient;
@@ -26,6 +26,9 @@ String identifier;
 int previousParameterValue = 0;
 int parameterValue = 0; // ---> the i/o pin value = parameterValue <<<<<<<<<<<<<<<<<<< 
 // <<<<<<<<<<<<<<<<< if there is a change in io pin  -> update and send data to server
+String data;
+String responsce;
+int timer = 0;
 
 void setup()
 {
@@ -44,7 +47,7 @@ void setup()
 
     //---- connect to server 
     connectToServer();
-    delay(5000);
+    delay(500);
 }
 
 void loop()
@@ -54,15 +57,15 @@ void loop()
     // interaption pins?
 
     // ------ use device id and data as parameters
-    String data;
-    String responsce;
+    // CheckIfStateChanged();
+    Serial.println("looping ......................");
 
     if (client.connected())
     {
         // get identifier if have none
         if(identifier.length() == 0)
         {
-            Serial.print("Getting id: ");
+            Serial.println("Getting id: ");
             data = "identifier:;adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:gettingID;";
             webSocketClient.sendData(data);
 
@@ -84,12 +87,16 @@ void loop()
             {
                 Serial.println("responsce is null");
             }
+
+            delay(500);
         }
         else
         {
-            Serial.println("sending data: ");
+            timer += 1;
+            Serial.print("timer: "); 
+            Serial.println(timer); 
 
-            
+            Serial.println("sending data: ");            
 
             //check if sensor changed data
             if(CheckIfStateChanged())
@@ -99,7 +106,7 @@ void loop()
                 data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:valuechanged;";
                 webSocketClient.sendData(data);
                 
-                delay(50);
+                delay(500);
 
                 webSocketClient.getData(responsce);
 
@@ -148,15 +155,28 @@ void loop()
         connectToServer();
     }
 
-    delay(500);
+    if(timer >= 30)
+    {
+        timer = 0;
+        Serial.println("reconnecting to server");
+        
+        data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;deleteConn:1;";
+        // tell to save the id?
+        webSocketClient.sendData(data);
+        delay(1000);
+        connectToServer();
+        identifier = "";
+    }
+
+    delay(1000);
 }
 
 bool CheckIfStateChanged()
 {
-    parameterValue = digitalRead(sensorPin);
     Serial.print("old data: ");
     Serial.println(previousParameterValue);
 
+    parameterValue = digitalRead(sensorPin);
     Serial.print("new data: ");
     Serial.println(parameterValue);
 
