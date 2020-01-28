@@ -9,13 +9,13 @@
 const int actuatorPin = 4; // D2 pin
 
 //--------- make dynamic?
-const char* ssid = "root";//"Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
-const char* password = "fox4025652000"; //"Anacardo01"; // "sd98f7sdSD98F7SD"; //
+const char* ssid = "Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
+const char* password = "Anacardo01"; //"fox4025652000";//"sd98f7sdSD98F7SD"; // 
 
 //------- change ! ip from the laptop where server is running
 const uint16_t port = 5000;
 char* path = "/ws";
-char* host = "192.168.0.101"; //"192.168.10.56"; //"192.168.43.5"; // // "192.168.0.102";
+char* host = "192.168.0.59"; //"192.168.10.56"; // "192.168.0.102";
 int numOfTries = 0;
 
 WebSocketClient webSocketClient;
@@ -106,9 +106,10 @@ void loop()
             
 
             webSocketClient.getData(responsce);
+
             delay(50);
 
-            //webSocketClient.sendData(data);
+            //webSocketClient.sendData(responsce);
 
             if (responsce.length() > 0) 
             {
@@ -134,8 +135,8 @@ void loop()
             }
             else
             {
-                // data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:valuechanged;";
-                // webSocketClient.sendData(data);
+                data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";";
+                webSocketClient.sendData(data);
                 Serial.println("responsce is null");
                 delay(1000);
             }
@@ -149,20 +150,20 @@ void loop()
         connectToServer();
     }
 
-    if(timer >= 70) // random value
-    {
-        timer = 0;
-        Serial.println("reconnecting to server");
+    // if(timer >= 70) // random value
+    // {
+    //     timer = 0;
+    //     Serial.println("reconnecting to server");
         
-        data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";deleteConn:1;reconnection:"+identifier+";";
-        webSocketClient.sendData(data);
-        delay(2000);
-        connectToServer();
-        data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue + ";reconnection:"+identifier+";";
-        delay(50);
-        webSocketClient.sendData(data);
-        delay(2000);
-    }
+    //     data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";deleteConn:1;reconnection:"+identifier+";";
+    //     webSocketClient.sendData(data);
+    //     delay(2000);
+    //     connectToServer();
+    //     data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue + ";reconnection:"+identifier+";";
+    //     delay(50);
+    //     webSocketClient.sendData(data);
+    //     delay(2000);
+    // }
 
     delay(500);
 }

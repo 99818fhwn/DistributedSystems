@@ -9,13 +9,13 @@
 const int sensorPin = 4; // io4
 
 //--------- make dynamic?
-const char* ssid = "root";//"Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
-const char* password = "fox4025652000"; //"fox4025652000";//"sd98f7sdSD98F7SD"; // 
+const char* ssid = "Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
+const char* password = "Anacardo01"; //"fox4025652000";//"sd98f7sdSD98F7SD"; // 
 
 //------- change ! ip from the laptop where server is running
 const uint16_t port = 5000;
 char* path = "/ws";
-char* host = "192.168.0.101"; //"192.168.10.56"; // "192.168.0.102";
+char* host = "192.168.0.59"; //"192.168.10.56"; // "192.168.0.102";
 int numOfTries = 0;
 
 WebSocketClient webSocketClient;
@@ -103,6 +103,7 @@ void loop()
             {
                 Serial.print("state changed: ");
                 Serial.println(parameterValue);
+            }
                 data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:valuechanged;";
                 webSocketClient.sendData(data);
                 
@@ -120,31 +121,26 @@ void loop()
                         Serial.println(responsce); 
                         Serial.println(newParameterValue);           
                         
-                        if(parameterValue != newParameterValue && newParameterValue >= 0)
-                        {
-                            //parameterValue = newParameterValue;
-
-                            // update the i/o pin value 
-                            //SetSensorValue(parameterValue);
-                            
-                            // send data to server
-                            data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";";
-                            webSocketClient.sendData(data);
-                        }
+                        // if(parameterValue != newParameterValue && newParameterValue >= 0)
+                        // {             
+                        //     // send data to server
+                        //     data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";";
+                        //     webSocketClient.sendData(data);
+                        // }
                     }
                 }
                 else
                 {
                     Serial.println("responsce is null");
                 }
-            }
-            else
-            {
-                data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";";
-                webSocketClient.sendData(data);
-                Serial.print("state didnt change: ");
-                Serial.println(parameterValue);
-            }
+            // }
+            // else
+            // {
+            //     data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";";
+            //     webSocketClient.sendData(data);
+            //     Serial.print("state didnt change: ");
+            //     Serial.println(parameterValue);
+            // }
         }
     }
     else 
@@ -155,20 +151,20 @@ void loop()
         connectToServer();
     }
 
-    if(timer >= 30) // random value
-    {
-        timer = 0;
-        Serial.println("reconnecting to server");
+    // if(timer >= 30) // random value
+    // {
+    //     timer = 0;
+    //     Serial.println("reconnecting to server");
         
-        data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;deleteConn:1;reconnection:"+identifier+";";
-        webSocketClient.sendData(data);
-        delay(2000);
-        connectToServer();
-        data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;reconnection:"+identifier+";";
-        delay(50);
-        webSocketClient.sendData(data);
-        delay(2000);
-    }
+    //     data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;deleteConn:1;reconnection:"+identifier+";";
+    //     webSocketClient.sendData(data);
+    //     delay(2000);
+    //     connectToServer();
+    //     data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;reconnection:"+identifier+";";
+    //     delay(50);
+    //     webSocketClient.sendData(data);
+    //     delay(2000);
+    // }
 
     delay(1000);
 }

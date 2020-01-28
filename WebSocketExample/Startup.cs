@@ -162,7 +162,7 @@ namespace WebSocketExample
             });
 
             //Start watcher
-            this.CheckForInactiveSockets(5000);
+            this.CheckForInactiveSockets(500);
 
             this.LoadAdapterAssemblies();
         }
@@ -182,7 +182,7 @@ namespace WebSocketExample
 
                         foreach (var client in this.CurrentClients)
                         {
-                            if ((currentTime - client.Value.LastTimeStamp).TotalMinutes >= 1) //5.5
+                            if ((currentTime - client.Value.LastTimeStamp).TotalMinutes >= 2) //5.5
                             {
                                 _ = client.Value.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None); // Close it without waiting for it
                                 if (this.CurrentClients.TryRemove(client.Key, out _))  // ----> New Version
@@ -241,14 +241,14 @@ namespace WebSocketExample
             try
             {
                 var clientToReplace = this.CurrentClients
-                    .Where(client => client.LastProtoObj != null && (client.LastProtoObj.ParamObjects
+                    .Where(client => client.Key.LastProtoObj != null && (client.Key.LastProtoObj.ParamObjects
                     .Where(paramObj => paramObj.ParamName == "reconnection")
                     .FirstOrDefault() != null))
                     .FirstOrDefault();
             
-                if(clientToReplace != null)
+                if(clientToReplace.Key != null)
                 {
-                    string id = clientToReplace.LastProtoObj.ParamObjects
+                    string id = clientToReplace.Key.LastProtoObj.ParamObjects
                         .Where(a => a.ParamName == "reconnection")
                         .First().Value;
 
@@ -267,17 +267,18 @@ namespace WebSocketExample
                     try
                     {
                         // ClientSocket clientToRemove = this.CurrentClients.Where(a => a.LastProtoObj.ParamObjects.Where(a => a.ParamName == "deleteConn").FirstOrDefault() != null).FirstOrDefault();
-                        this.CurrentClients = new ConcurrentBag<ClientSocket>(this.CurrentClients.Except(new[] { clientToReplace }));
+                        //this.CurrentClients = new ConcurrentBag<ClientSocket>(this.CurrentClients.Except(new[] { clientToReplace }));
+                        this.CurrentClients.TryRemove(clientToReplace.Key, out _);
 
                         WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
 
-                        this.CheckForInactiveSockets(5000, clientSocket);
+                        this.CheckForInactiveSockets(500);
 
-                        await clientToReplace.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
+                        await clientToReplace.Key.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
                     }
                     catch
                     {
-
+                        //
                     }
                 }
 
@@ -338,31 +339,15 @@ namespace WebSocketExample
                 clientSocket.LastProtoObj = protoObj;
                 message = protoObj.BuildProtocollMessage();
 
-                try
-                {
-                    var objc = protoObj.ParamObjects.First(a => a.ParamName == "deleteConn");
-
-                    var clientToRemove = this.CurrentClients.Where(a => a.Value.LastProtoObj.ParamObjects.Where(a => a.ParamName == "deleteConn").FirstOrDefault() != null).FirstOrDefault();
-                    if (this.CurrentClients.TryRemove(clientToRemove.Key, out _)) // ---------> New Version
-                    {
-                        WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
-                        await clientToRemove.Value.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
-
-                        return; // -> if removed skip unnecessary actions that might get faulty due to wrong parameters.
-                    }
-
-                    // -----------------> is now one time activated at the beginning of the server - this.CheckForInactiveSockets(5000, clientSocket);
-                }
-                catch
-                {
-                    //
-                }
-
+                // should stay before so the client is not waiting
+                await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
+                
+                
                 // Update value of webpage and inform pipeline targets
-                await this.DistributeToBrowserClients(protoObj).ConfigureAwait(false);
+                await this.DistributeToBrowserClients(protoObj);//.ConfigureAwait(true); //false
                 await this.UsePipelines(protoObj);
 
-                await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
+                //await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
             }
 
             await clientSocket.Socket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);

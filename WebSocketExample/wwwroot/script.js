@@ -21,7 +21,18 @@
             console.log("Received: \n" + event.data);
         var msg = event.data;
         var identifier = msg.split(';').filter(part => part.includes('identifier:'))[0].split(':')[1];
-        console.log(identifier); };
+        console.log(identifier); 
+ if(identifier == '8980f064xebd2x4995xab86x84165f0f00c0'){ 
+function changeCBValue8980f064xebd2x4995xab86x84165f0f00c0(msg) { 
+    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('checkb8980f064xebd2x4995xab86x84165f0f00c0').checked = (value == '1'); 
+ }    changeCBValue8980f064xebd2x4995xab86x84165f0f00c0(msg); 
+
+}
+ if(identifier == '3cdfe73axb3cex4ab4xb5e0xbd8c4377714b'){ 
+function changeCBValue3cdfe73axb3cex4ab4xb5e0xbd8c4377714b(msg) { 
+    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('motionDetDiv3cdfe73axb3cex4ab4xb5e0xbd8c4377714b').innerHTML  =     "<p> Motion Detected: " + value + " </p> ";}    changeCBValue3cdfe73axb3cex4ab4xb5e0xbd8c4377714b(msg); 
+
+}};
 
     socket.onerror = function(error)
     {
@@ -77,3 +88,8 @@
         location.reload();
         }, 500);
     }
+ function sendOnOff8980f064xebd2x4995xab86x84165f0f00c0() { 
+var str = 'identifier:' + '8980f064xebd2x4995xab86x84165f0f00c0' + ';;isOn:' + document.getElementById('checkb8980f064xebd2x4995xab86x84165f0f00c0').checked;socket.send(str); 
+ } 
+
+  
