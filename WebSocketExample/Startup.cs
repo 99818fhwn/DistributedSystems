@@ -21,11 +21,11 @@ namespace WebSocketExample
     public class Startup
     {
 
-        public ConcurrentBag<WebSocket> BrowserClients { get; set; }
+        public ConcurrentDictionary<WebSocket,WebSocket> BrowserClients { get; set; }
 
-        public ConcurrentBag<WebSocket> PiplineSockets { get; set; }
+        public ConcurrentDictionary<WebSocket,WebSocket> PiplineSockets { get; set; }
 
-        public ConcurrentBag<ClientSocket> CurrentClients { get; set; }
+        public ConcurrentDictionary<ClientSocket,ClientSocket> CurrentClients { get; set; }
 
         public string rootPath { get; set; }
         public AggregateCatalog Catalog { get; private set; }
@@ -33,7 +33,7 @@ namespace WebSocketExample
 
         [ImportMany]
         public ICollection<IWebAdapterAble> WebAdapters { get; set; }
-        public ConcurrentBag<Pipeline> Pipelines { get; private set; }
+        public ConcurrentDictionary<Pipeline,Pipeline> Pipelines { get; private set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -41,11 +41,11 @@ namespace WebSocketExample
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            this.PiplineSockets = new ConcurrentBag<WebSocket>();
-            this.Pipelines = new ConcurrentBag<Pipeline>();
+            this.PiplineSockets = new ConcurrentDictionary<WebSocket,WebSocket>();
+            this.Pipelines = new ConcurrentDictionary<Pipeline,Pipeline>();
             this.WebAdapters = new List<IWebAdapterAble>();
-            this.CurrentClients = new ConcurrentBag<ClientSocket>();
-            this.BrowserClients = new ConcurrentBag<WebSocket>();
+            this.CurrentClients = new ConcurrentDictionary<ClientSocket,ClientSocket>();
+            this.BrowserClients = new ConcurrentDictionary<WebSocket,WebSocket>();
             this.rootPath = env.WebRootPath;
             WebfileFactory.IndexPath = Path.Combine(this.rootPath, "index.html");
             WebfileFactory.ScriptPath = Path.Combine(this.rootPath, "script.js");
@@ -99,14 +99,15 @@ namespace WebSocketExample
                         var webSocket = await context.WebSockets.AcceptWebSocketAsync();
 
                         var client = new ClientSocket(webSocket, Guid.NewGuid().ToString().Replace('-', 'x'));
-                        this.CurrentClients.Add(client);
+                        this.CurrentClients.TryAdd(client, client);//.Add(client); ---> New Version 
                         await this.ClientDevice(client);
 
-                        // Device disconected -> remove and update
-                        this.CurrentClients.TryTake(out client);
-
-                        // Remove old DeviceRepresentation -> override old outdated index and script files
-                        WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
+                        // Device disconected -> remove and update ---------> New Version
+                        if (this.CurrentClients.TryRemove(client, out _))
+                        {
+                            // Remove old DeviceRepresentation -> override old outdated index and script files
+                            WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines); 
+                        }
                         return;
                     }
 
@@ -121,7 +122,7 @@ namespace WebSocketExample
                     if (context.WebSockets.IsWebSocketRequest)
                     {
                         var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        this.BrowserClients.Add(webSocket);
+                        this.BrowserClients.TryAdd(webSocket,webSocket);
 
                         //Task.Run( async () =>
                         //{
@@ -133,7 +134,7 @@ namespace WebSocketExample
                         await this.BrowserDevices(webSocket);
 
                         // Device disconected -> remove and update
-                        this.BrowserClients.TryTake(out webSocket);
+                        this.BrowserClients.TryRemove(webSocket, out _);
                         return;
                     }
 
@@ -148,11 +149,11 @@ namespace WebSocketExample
                     if (context.WebSockets.IsWebSocketRequest)
                     {
                         var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        this.PiplineSockets.Add(webSocket);
+                        this.PiplineSockets.TryAdd(webSocket,webSocket);
                         await this.ListenPipelines(webSocket);
 
                         // Device disconected -> remove and update
-                        this.PiplineSockets.TryTake(out webSocket);
+                        this.PiplineSockets.TryRemove(webSocket, out _);
                         return;
                     }
 
@@ -160,36 +161,45 @@ namespace WebSocketExample
                 });
             });
 
+            //Start watcher
+            this.CheckForInactiveSockets(5000);
+
             this.LoadAdapterAssemblies();
         }
 
-        private void CheckForInactiveSockets(int duration, ClientSocket con)
+        private void CheckForInactiveSockets(int probingIntervall)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 while (true)
                 {
-                    Task.Delay(duration);
-
-                    var currentTime = DateTime.UtcNow;
-                    var oldConnections = new List<ClientSocket>();
-
-                    foreach(var client in this.CurrentClients)
+                    try
                     {
-                        if ((currentTime - client.LastTimeStamp).TotalMinutes >= 1) //5.5
+                        await Task.Delay(probingIntervall);
+
+                        var currentTime = DateTime.UtcNow;
+                        var oldConnections = new List<ClientSocket>();
+
+                        foreach (var client in this.CurrentClients)
                         {
-                            client.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
-                            //this.CurrentClients.TryTake(out cl);
-                            this.CurrentClients = new ConcurrentBag<ClientSocket>(this.CurrentClients.Except(new[] { client }));
+                            if ((currentTime - client.Value.LastTimeStamp).TotalMinutes >= 1) //5.5
+                            {
+                                _ = client.Value.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None); // Close it without waiting for it
+                                if (this.CurrentClients.TryRemove(client.Key, out _))  // ----> New Version
+                                {
+                                    // Remove old DeviceRepresentation
+                                    WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
+                                }
 
-                            // Remove old DeviceRepresentation
-                            WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
-                            //return;
+                            }
                         }
-                    }
 
-                    return;
-                }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Watcher Error:" + e.Message);
+                    }
+               }
             });
         }
 
@@ -310,9 +320,6 @@ namespace WebSocketExample
             // Inform device about its number
             await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
 
-            //Start watcher
-            this.CheckForInactiveSockets(5000, clientSocket);
-
             while (!result.CloseStatus.HasValue)
             {
                 result = await clientSocket.Socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
@@ -331,23 +338,25 @@ namespace WebSocketExample
                 clientSocket.LastProtoObj = protoObj;
                 message = protoObj.BuildProtocollMessage();
 
-                //try
-                //{
-                //    var objc = protoObj.ParamObjects.First(a => a.ParamName == "deleteConn");
+                try
+                {
+                    var objc = protoObj.ParamObjects.First(a => a.ParamName == "deleteConn");
 
-                //    ClientSocket clientToRemove = this.CurrentClients.Where(a => a.LastProtoObj.ParamObjects.Where(a => a.ParamName == "deleteConn").FirstOrDefault() != null).FirstOrDefault();
-                //    this.CurrentClients = new ConcurrentBag<ClientSocket>(this.CurrentClients.Except(new[] { clientToRemove }));
+                    var clientToRemove = this.CurrentClients.Where(a => a.Value.LastProtoObj.ParamObjects.Where(a => a.ParamName == "deleteConn").FirstOrDefault() != null).FirstOrDefault();
+                    if (this.CurrentClients.TryRemove(clientToRemove.Key, out _)) // ---------> New Version
+                    {
+                        WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
+                        await clientToRemove.Value.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
 
-                //    WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
+                        return; // -> if removed skip unnecessary actions that might get faulty due to wrong parameters.
+                    }
 
-                //    this.CheckForInactiveSockets(5000, clientSocket);
-
-                //    await clientToRemove.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
-                //}
-                //catch
-                //{
-                        //
-                //}
+                    // -----------------> is now one time activated at the beginning of the server - this.CheckForInactiveSockets(5000, clientSocket);
+                }
+                catch
+                {
+                    //
+                }
 
                 // Update value of webpage and inform pipeline targets
                 await this.DistributeToBrowserClients(protoObj).ConfigureAwait(false);
@@ -361,19 +370,19 @@ namespace WebSocketExample
 
         private async Task UsePipelines(ProtocollObject protoObj)
         {
-            foreach (Pipeline pipe in this.Pipelines)
+            foreach (var pipe in this.Pipelines)
             {
-                if (pipe.FromId == protoObj.Identifier)
+                if (pipe.Value.FromId == protoObj.Identifier)
                 {
                     foreach (var c in this.CurrentClients)
                     {
-                        if (c.UniqueID == pipe.ToId)
+                        if (c.Value.UniqueID == pipe.Value.ToId)
                         {
                             var paramsToSend = protoObj.ParamObjects;
-                            c.LastProtoObj.ParamObjects = paramsToSend;
-                            var message = c.LastProtoObj.BuildProtocollMessage() + pipe.AdditionalParams;
+                            c.Value.LastProtoObj.ParamObjects = paramsToSend;
+                            var message = c.Value.LastProtoObj.BuildProtocollMessage() + pipe.Value.AdditionalParams;
 
-                            await c.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                            await c.Value.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
                         }
                     }
                 }
@@ -387,7 +396,7 @@ namespace WebSocketExample
 
             foreach (var bc in this.BrowserClients)
             {
-                await bc.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                await bc.Value.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
             }
         }
 
@@ -398,7 +407,7 @@ namespace WebSocketExample
 
             foreach (var c in this.CurrentClients)
             {
-                var message = c.LastProtoObj.BuildProtocollMessage();
+                var message = c.Value.LastProtoObj.BuildProtocollMessage();
                 await webSocket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
             }
 
@@ -442,8 +451,10 @@ namespace WebSocketExample
 
                     if (ids.Length > 1)
                     {
-                        var tempL = new List<ClientSocket>(this.CurrentClients);
-                        if (tempL.Where(x => x.UniqueID == ids[0] || x.UniqueID == ids[1]).Count() == 2)
+                        var tempD = new Dictionary<ClientSocket,ClientSocket>(this.CurrentClients); // ------> New Version
+
+                        // Find the correct pipeline if any exists
+                        if (tempD.Where(x => x.Value.UniqueID == ids[0] || x.Value.UniqueID == ids[1]).Count() == 2)
                         {
                             if (pipeParts[0] == "add")
                             {
@@ -453,8 +464,8 @@ namespace WebSocketExample
                                 {
                                     additionalParams = pipeObj[1];
                                 }
-
-                                this.Pipelines.Add(new Pipeline(ids[0], ids[1], additionalParams));
+                                var pipe = new Pipeline(ids[0], ids[1], additionalParams);
+                                this.Pipelines.TryAdd(pipe,pipe);
 
                                 WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
                             }
@@ -463,9 +474,9 @@ namespace WebSocketExample
                                 Pipeline foundpipeline = null;
                                 foreach (var p in this.Pipelines)
                                 {
-                                    if (p.FromId == ids[0] && p.ToId == ids[1])
+                                    if (p.Value.FromId == ids[0] && p.Value.ToId == ids[1])
                                     {
-                                        foundpipeline = p;
+                                        foundpipeline = p.Key;
                                         break;
                                     }
                                 }
@@ -476,7 +487,7 @@ namespace WebSocketExample
                                     //{
                                     //    await ps.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(pipeObj), 0, pipeObj.Length), WebSocketMessageType.Text, true, CancellationToken.None);
                                     //}
-                                    this.Pipelines.TryTake(out foundpipeline);
+                                    this.Pipelines.TryRemove(foundpipeline, out _);  // ----> New Version
 
                                     WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
                                 }
@@ -501,9 +512,9 @@ namespace WebSocketExample
 
             foreach (var c in this.CurrentClients)
             {
-                if (protoObj.Identifier == c.UniqueID)
+                if (protoObj.Identifier == c.Value.UniqueID)
                 {
-                    await c.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                    await c.Value.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
                 }
             }
         }
