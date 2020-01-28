@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace WebSocketExample
 
         public static string ScriptPath { get; set; }
 
-        public static void GenerateFiles(IEnumerable<ClientSocket> clients, IEnumerable<Pipeline> pipelines)
+        public static void GenerateFiles(ConcurrentDictionary<ClientSocket, ClientSocket> currentClients, ConcurrentDictionary<Pipeline, Pipeline> pipelines)
         {
             string indexPage = string.Empty;
 
@@ -28,14 +29,14 @@ namespace WebSocketExample
                                 <body>
     <h1>Clients</h1>";
 
-            foreach (var c in clients)
+            foreach (var c in currentClients)
             {
-                if (c.Adapter != null)
+                if (c.Value.Adapter != null)
                 {
                     indexPage += $"<div style=\"border:solid; border-color:black; border-width:2px; padding:2px;\"> \n" +
-    $"<h3>{c.Name}</h3> \n" +
-    $"{c.UniqueID} \n" +
-    $"{c.Adapter.GenerateHTMLCode(c.UniqueID)} \n" +
+    $"<h3>{c.Value.Name}</h3> \n" +
+    $"{c.Value.UniqueID} \n" +
+    $"{c.Value.Adapter.GenerateHTMLCode(c.Value.UniqueID)} \n" +
     $"</div> \n";
                 }
             }
@@ -61,7 +62,7 @@ namespace WebSocketExample
 
             foreach (var pi in pipelines)
             {
-                indexPage += $"<tr><th>{pi.FromId}-->{pi.ToId};;{pi.AdditionalParams}</th><th><button onclick=\"sendDelete('{pi.FromId}-->{pi.ToId}')\">Delete</button></th></tr>\n";
+                indexPage += $"<tr><th>{pi.Value.FromId}-->{pi.Value.ToId};;{pi.Value.AdditionalParams}</th><th><button onclick=\"sendDelete('{pi.Value.FromId}-->{pi.Value.ToId}')\">Delete</button></th></tr>\n";
             }
 
             indexPage += @"</table>
@@ -79,18 +80,18 @@ namespace WebSocketExample
 
             string passToIdFunc = string.Empty;
 
-            foreach (var c in clients)
+            foreach (var c in currentClients)
             {
-                passToIdFunc += $"\n if(identifier == '{c.UniqueID}'){{ \n" +
-                    $"{c.Adapter.GenerateScriptcodeGet(c.UniqueID)} \n" +
+                passToIdFunc += $"\n if(identifier == '{c.Value.UniqueID}'){{ \n" +
+                    $"{c.Value.Adapter.GenerateScriptcodeGet(c.Value.UniqueID)} \n" +
                     $"\n}}";
             }
 
             string sendFromIdFunc = string.Empty;
 
-            foreach (var c in clients)
+            foreach (var c in currentClients)
             {
-                sendFromIdFunc += $"\n {c.Adapter.GenerateScriptCodeSet(c.UniqueID)} \n";
+                sendFromIdFunc += $"\n {c.Value.Adapter.GenerateScriptCodeSet(c.Value.UniqueID)} \n";
             }
 
             string scripFile = string.Empty;
