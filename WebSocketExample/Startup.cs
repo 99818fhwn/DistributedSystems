@@ -97,6 +97,7 @@ namespace WebSocketExample
                     if (context.WebSockets.IsWebSocketRequest)
                     {
                         var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+
                         var client = new ClientSocket(webSocket, Guid.NewGuid().ToString().Replace('-', 'x'));
                         this.CurrentClients.Add(client);
                         await this.ClientDevice(client);
@@ -223,6 +224,59 @@ namespace WebSocketExample
             var result = await clientSocket.Socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             var protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
 
+            
+            // do only it is the reconnecting device
+            //"identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;reconnection:"+identifier+";";
+
+            try
+            {
+                var clientToReplace = this.CurrentClients
+                    .Where(client => client.LastProtoObj != null && (client.LastProtoObj.ParamObjects
+                    .Where(paramObj => paramObj.ParamName == "reconnection")
+                    .FirstOrDefault() != null))
+                    .FirstOrDefault();
+            
+                if(clientToReplace != null)
+                {
+                    string id = clientToReplace.LastProtoObj.ParamObjects
+                        .Where(a => a.ParamName == "reconnection")
+                        .First().Value;
+
+                    // security issue
+
+                    if(protoObj.Identifier == id && protoObj.ParamObjects.Where(paramObj => paramObj.ParamName == "reconnection").FirstOrDefault() != null)
+                    {
+                        clientSocket.UniqueID = id;
+                    }
+
+                    //if (protoObj.ParamObjects.Where(paramObj => paramObj.ParamName == "reconnection").FirstOrDefault() != null)
+                    //{
+                        //clientSocket.UniqueID = id;
+                    //}
+
+                    try
+                    {
+                        // ClientSocket clientToRemove = this.CurrentClients.Where(a => a.LastProtoObj.ParamObjects.Where(a => a.ParamName == "deleteConn").FirstOrDefault() != null).FirstOrDefault();
+                        this.CurrentClients = new ConcurrentBag<ClientSocket>(this.CurrentClients.Except(new[] { clientToReplace }));
+
+                        WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
+
+                        this.CheckForInactiveSockets(5000, clientSocket);
+
+                        await clientToReplace.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+            }
+            catch(Exception e)
+            {
+                //
+            }
+
             // Set serverside Identifier
             protoObj.Identifier = clientSocket.UniqueID;
             clientSocket.Name = protoObj.Name;
@@ -272,41 +326,28 @@ namespace WebSocketExample
                 // Create new ProtocollObject from the clients message
                 protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
 
-
-                
-
-                //if (protoObj.ParamObjects.FirstOrDefault(a => a.ParamName == "deleteConn") != null)
-                //{
-                //    var clientToRemove = this.CurrentClients.Where(a => a.UniqueID == protoObj.Identifier).FirstOrDefault();
-                //    await clientToRemove.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
-
-                //    this.CurrentClients = new ConcurrentBag<ClientSocket>(this.CurrentClients.Except(new[] { clientToRemove }));
-
-                //    WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
-                //}
-
                 // Set serverside Identifier
                 protoObj.Identifier = clientSocket.UniqueID;
                 clientSocket.LastProtoObj = protoObj;
                 message = protoObj.BuildProtocollMessage();
 
-                try
-                {
-                    var objc = protoObj.ParamObjects.First(a => a.ParamName == "deleteConn");
+                //try
+                //{
+                //    var objc = protoObj.ParamObjects.First(a => a.ParamName == "deleteConn");
 
-                    ClientSocket clientToRemove = this.CurrentClients.Where(a => a.LastProtoObj.ParamObjects.Where(a => a.ParamName == "deleteConn").FirstOrDefault() != null).FirstOrDefault();
-                    this.CurrentClients = new ConcurrentBag<ClientSocket>(this.CurrentClients.Except(new[] { clientToRemove }));
+                //    ClientSocket clientToRemove = this.CurrentClients.Where(a => a.LastProtoObj.ParamObjects.Where(a => a.ParamName == "deleteConn").FirstOrDefault() != null).FirstOrDefault();
+                //    this.CurrentClients = new ConcurrentBag<ClientSocket>(this.CurrentClients.Except(new[] { clientToRemove }));
 
-                    WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
+                //    WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
 
-                    this.CheckForInactiveSockets(5000, clientSocket);
+                //    this.CheckForInactiveSockets(5000, clientSocket);
 
-                    await clientToRemove.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
-                }
-                catch
-                {
-                    //
-                }
+                //    await clientToRemove.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
+                //}
+                //catch
+                //{
+                        //
+                //}
 
                 // Update value of webpage and inform pipeline targets
                 await this.DistributeToBrowserClients(protoObj).ConfigureAwait(false);

@@ -18,11 +18,10 @@ namespace SoundActuatorAdapter
 
         public string GenerateHTMLCode(string identifier)
         {
-
             return @"<h2>Sound Actuator " + identifier + "</h2>" +
-                @"Sound is on: <input type=""checkbox"" id=""checkb" + identifier + @"""onclick=""sendOnOff" + 
-                identifier + @"()"">"+
-                @"<input type=""submit"" value=""submit"" onclick=""sendOnOff" + identifier + @"()"">";
+                @"Sound is on: <input type=""checkbox"" id=""checkb" + identifier + @"""onclick=""sendOnOff" +
+                identifier + @"()"">";
+                //@"<input type=""submit"" value=""submit"" onclick=""sendOnOff" + identifier + @"()"">";
         }
 
         public string GenerateScriptcodeGet(string identifier)

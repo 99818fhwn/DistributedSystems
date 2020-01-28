@@ -9,13 +9,13 @@
 const int actuatorPin = 4; // D2 pin
 
 //--------- make dynamic?
-const char* ssid = "Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
-const char* password = "Anacardo01"; // "sd98f7sdSD98F7SD"; //
+const char* ssid = "root";//"Obi-WLAN-Kenobi"; //"root";//"ALERTA-P1b"; //"ALERTA3"; // 
+const char* password = "fox4025652000"; //"Anacardo01"; // "sd98f7sdSD98F7SD"; //
 
 //------- change ! ip from the laptop where server is running
 const uint16_t port = 5000;
 char* path = "/ws";
-char* host = "192.168.0.59"; //"192.168.10.56"; //"192.168.43.5"; // // "192.168.0.102";
+char* host = "192.168.0.101"; //"192.168.10.56"; //"192.168.43.5"; // // "192.168.0.102";
 int numOfTries = 0;
 
 WebSocketClient webSocketClient;
@@ -28,7 +28,7 @@ int parameterValue = 0; // ---> the i/o pin value = parameterValue <<<<<<<<<<<<<
 // <<<<<<<<<<<<<<<<< if there is a change in io pin  -> update and send data to server
 String data;
 String responsce;
-
+int timer = 0;
 
 void setup()
 {
@@ -94,6 +94,10 @@ void loop()
         }
         else
         {
+            timer += 1;
+            Serial.print("timer: "); 
+            Serial.println(timer); 
+
             Serial.println("requesting data: ");
             // get data from server and if changed update pin
             // data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";puttext:requestingValue;";
@@ -108,9 +112,8 @@ void loop()
 
             if (responsce.length() > 0) 
             {
-                if( identifier == GetIdentifier(responsce))
-                {
-                    
+                //if( identifier == GetIdentifier(responsce))
+               // {
                     Serial.print("Received data: ");
                     Serial.println(responsce);
 
@@ -127,7 +130,7 @@ void loop()
                         webSocketClient.sendData(data);
                         SetActuatorValue(parameterValue);
                     }
-                }
+               // }
             }
             else
             {
@@ -144,6 +147,21 @@ void loop()
         // identifier = "";
         //---- connect to server 
         connectToServer();
+    }
+
+    if(timer >= 70) // random value
+    {
+        timer = 0;
+        Serial.println("reconnecting to server");
+        
+        data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue +";deleteConn:1;reconnection:"+identifier+";";
+        webSocketClient.sendData(data);
+        delay(2000);
+        connectToServer();
+        data = "identifier:" + identifier + ";adapter:"+adapter+";name:"+adapterName+";;isOn:" + parameterValue + ";reconnection:"+identifier+";";
+        delay(50);
+        webSocketClient.sendData(data);
+        delay(2000);
     }
 
     delay(500);
