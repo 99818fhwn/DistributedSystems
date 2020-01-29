@@ -22,10 +22,21 @@
         var msg = event.data;
         var identifier = msg.split(';').filter(part => part.includes('identifier:'))[0].split(':')[1];
         console.log(identifier); 
- if(identifier == 'f845d49cxb521x4b5bx9679x585045ffca2f'){ 
-function changeCBValuef845d49cxb521x4b5bx9679x585045ffca2f(msg) { 
-    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('checkbf845d49cxb521x4b5bx9679x585045ffca2f').checked = (value == '1'); 
- }    changeCBValuef845d49cxb521x4b5bx9679x585045ffca2f(msg); 
+ if(identifier == '2c18c358x6db7x477fx9885x02a48ab212a4'){ 
+function changeCBValue2c18c358x6db7x477fx9885x02a48ab212a4(msg) { 
+    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('checkb2c18c358x6db7x477fx9885x02a48ab212a4').checked = (value == '1'); 
+ }    changeCBValue2c18c358x6db7x477fx9885x02a48ab212a4(msg); 
+
+}
+ if(identifier == '999d3a2cxd0e4x4dc8xba9cx4e943929ad2c'){ 
+function changeCBValue999d3a2cxd0e4x4dc8xba9cx4e943929ad2c(msg) { 
+    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('motionDetDiv999d3a2cxd0e4x4dc8xba9cx4e943929ad2c').innerHTML  =     "<p> Motion Detected: " + value + " </p> ";}    changeCBValue999d3a2cxd0e4x4dc8xba9cx4e943929ad2c(msg); 
+
+}
+ if(identifier == 'b983645ax8b9dx4eefx9a65x35b5e46d9293'){ 
+function changeCBValueb983645ax8b9dx4eefx9a65x35b5e46d9293(msg) { 
+    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('checkbb983645ax8b9dx4eefx9a65x35b5e46d9293').checked = (value == '1'); 
+ }    changeCBValueb983645ax8b9dx4eefx9a65x35b5e46d9293(msg); 
 
 }};
 
@@ -83,6 +94,12 @@ function changeCBValuef845d49cxb521x4b5bx9679x585045ffca2f(msg) {
         location.reload();
         }, 500);
     }
- function sendOnOfff845d49cxb521x4b5bx9679x585045ffca2f() { 
-var str = 'identifier:' + 'f845d49cxb521x4b5bx9679x585045ffca2f' + ';;isOn:' + document.getElementById('checkbf845d49cxb521x4b5bx9679x585045ffca2f').checked;socket.send(str); 
+ function sendOnOff2c18c358x6db7x477fx9885x02a48ab212a4() { 
+var str = 'identifier:' + '2c18c358x6db7x477fx9885x02a48ab212a4' + ';;isOn:' + document.getElementById('checkb2c18c358x6db7x477fx9885x02a48ab212a4').checked;socket.send(str); 
+ } 
+
+  
+
+ function sendOnOffb983645ax8b9dx4eefx9a65x35b5e46d9293() { 
+var str = 'identifier:' + 'b983645ax8b9dx4eefx9a65x35b5e46d9293' + ';;isOn:' + document.getElementById('checkbb983645ax8b9dx4eefx9a65x35b5e46d9293').checked;socket.send(str); 
  } 
