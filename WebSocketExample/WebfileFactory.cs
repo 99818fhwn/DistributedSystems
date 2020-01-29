@@ -82,16 +82,22 @@ namespace WebSocketExample
 
             foreach (var c in currentClients)
             {
-                passToIdFunc += $"\n if(identifier == '{c.Value.UniqueID}'){{ \n" +
-                    $"{c.Value.Adapter.GenerateScriptcodeGet(c.Value.UniqueID)} \n" +
-                    $"\n}}";
+                if (c.Value.Adapter != null)
+                {
+                    passToIdFunc += $"\n if(identifier == '{c.Value.UniqueID}'){{ \n" +
+                                $"{c.Value.Adapter.GenerateScriptcodeGet(c.Value.UniqueID)} \n" +
+                                $"\n}}";
+                }
             }
 
             string sendFromIdFunc = string.Empty;
 
             foreach (var c in currentClients)
             {
-                sendFromIdFunc += $"\n {c.Value.Adapter.GenerateScriptCodeSet(c.Value.UniqueID)} \n";
+                if (c.Value.Adapter != null)
+                {
+                    sendFromIdFunc += $"\n {c.Value.Adapter.GenerateScriptCodeSet(c.Value.UniqueID)} \n";
+                }
             }
 
             string scripFile = string.Empty;

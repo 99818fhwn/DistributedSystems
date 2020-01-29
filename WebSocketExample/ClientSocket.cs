@@ -22,6 +22,8 @@ namespace WebSocketExample
 
         public ProtocollObject LastProtoObj { get; set; }
 
+        public ProtocollObject PriorityProtoObj { get; set; }
+
         public DateTime LastTimeStamp { get; set; }
 
     }
