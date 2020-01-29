@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {}
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
+    "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
         "projectName": "WebAdapterLibrary",
-        "projectPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
-        "packagesPath": "C:\\Users\\Katja\\.nuget\\packages\\",
-        "outputPath": "C:\\Katja\\Cockroaches\\Austria2017\\study\\3\\Verteilte_Systeme\\IoTProject_Full\\WebAdapterLibrary\\obj\\",
+        "projectPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\WebAdapterLibrary.csproj",
+        "packagesPath": "C:\\Users\\wef\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wef\\source\\repos\\DistributedSystems\\WebAdapterLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Katja\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\wef\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"

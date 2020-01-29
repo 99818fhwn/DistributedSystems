@@ -50,7 +50,7 @@ namespace WebSocketExample
             WebfileFactory.IndexPath = Path.Combine(this.rootPath, "index.html");
             WebfileFactory.ScriptPath = Path.Combine(this.rootPath, "script.js");
 
-
+            this.LoadAdapterAssemblies();
             WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
 
             var testcollection = new ConcurrentBag<object>();
@@ -163,8 +163,6 @@ namespace WebSocketExample
 
             //Start watcher
             this.CheckForInactiveSockets(500);
-
-            this.LoadAdapterAssemblies();
         }
 
         private void CheckForInactiveSockets(int probingIntervall)
@@ -272,7 +270,7 @@ namespace WebSocketExample
 
                         WebfileFactory.GenerateFiles(this.CurrentClients, this.Pipelines);
 
-                        this.CheckForInactiveSockets(500);
+                        //this.CheckForInactiveSockets(500); redundand
 
                         await clientToReplace.Key.Socket.CloseAsync(WebSocketCloseStatus.PolicyViolation, "Closed for inactivity", CancellationToken.None);
                     }
@@ -331,21 +329,31 @@ namespace WebSocketExample
 
                 Console.WriteLine(this.DecodeByteArray(buffer, result.Count) + "++++++++++++++++++++++++++++++++++++++++++++");
 
-                // Create new ProtocollObject from the clients message
-                protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
+                if (clientSocket.PriorityProtoObj == null)
+                {
+                    // Create new ProtocollObject from the clients message
+                    protoObj = new ProtocollObject(this.DecodeByteArray(buffer, result.Count));
 
-                // Set serverside Identifier
-                protoObj.Identifier = clientSocket.UniqueID;
-                clientSocket.LastProtoObj = protoObj;
-                message = protoObj.BuildProtocollMessage();
+                    // Set serverside Identifier
+                    protoObj.Identifier = clientSocket.UniqueID;
+                    clientSocket.LastProtoObj = protoObj;
+                    message = protoObj.BuildProtocollMessage().Split(";;")[0] + ";;";
 
-                // should stay before so the client is not waiting
-                await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
-                
-                
-                // Update value of webpage and inform pipeline targets
-                await this.DistributeToBrowserClients(protoObj);//.ConfigureAwait(true); //false
-                await this.UsePipelines(protoObj);
+                    //// should stay before so the client is not waiting
+                    await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
+
+
+                    // Update value of webpage and inform pipeline targets
+                    await this.DistributeToBrowserClients(protoObj);//.ConfigureAwait(true); //false
+                    await this.UsePipelines(protoObj);
+
+                }
+                else
+                {
+                    message = clientSocket.PriorityProtoObj.BuildProtocollMessage();
+                    await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
+                    clientSocket.PriorityProtoObj = null;
+                }
 
                 //await clientSocket.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
             }
@@ -499,7 +507,8 @@ namespace WebSocketExample
             {
                 if (protoObj.Identifier == c.Value.UniqueID)
                 {
-                    await c.Value.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                    //await c.Value.Socket.SendAsync(new ArraySegment<byte>(this.EncodeToByteArray(message), 0, message.Length), WebSocketMessageType.Text, true, CancellationToken.None);
+                    c.Value.PriorityProtoObj = protoObj;
                 }
             }
         }

@@ -22,15 +22,10 @@
         var msg = event.data;
         var identifier = msg.split(';').filter(part => part.includes('identifier:'))[0].split(':')[1];
         console.log(identifier); 
- if(identifier == '8980f064xebd2x4995xab86x84165f0f00c0'){ 
-function changeCBValue8980f064xebd2x4995xab86x84165f0f00c0(msg) { 
-    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('checkb8980f064xebd2x4995xab86x84165f0f00c0').checked = (value == '1'); 
- }    changeCBValue8980f064xebd2x4995xab86x84165f0f00c0(msg); 
-
-}
- if(identifier == '3cdfe73axb3cex4ab4xb5e0xbd8c4377714b'){ 
-function changeCBValue3cdfe73axb3cex4ab4xb5e0xbd8c4377714b(msg) { 
-    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('motionDetDiv3cdfe73axb3cex4ab4xb5e0xbd8c4377714b').innerHTML  =     "<p> Motion Detected: " + value + " </p> ";}    changeCBValue3cdfe73axb3cex4ab4xb5e0xbd8c4377714b(msg); 
+ if(identifier == 'f845d49cxb521x4b5bx9679x585045ffca2f'){ 
+function changeCBValuef845d49cxb521x4b5bx9679x585045ffca2f(msg) { 
+    let value = msg.split(';').filter(part => part.includes('isOn:'))[0].split(':')[1];    document.getElementById('checkbf845d49cxb521x4b5bx9679x585045ffca2f').checked = (value == '1'); 
+ }    changeCBValuef845d49cxb521x4b5bx9679x585045ffca2f(msg); 
 
 }};
 
@@ -88,8 +83,6 @@ function changeCBValue3cdfe73axb3cex4ab4xb5e0xbd8c4377714b(msg) {
         location.reload();
         }, 500);
     }
- function sendOnOff8980f064xebd2x4995xab86x84165f0f00c0() { 
-var str = 'identifier:' + '8980f064xebd2x4995xab86x84165f0f00c0' + ';;isOn:' + document.getElementById('checkb8980f064xebd2x4995xab86x84165f0f00c0').checked;socket.send(str); 
+ function sendOnOfff845d49cxb521x4b5bx9679x585045ffca2f() { 
+var str = 'identifier:' + 'f845d49cxb521x4b5bx9679x585045ffca2f' + ';;isOn:' + document.getElementById('checkbf845d49cxb521x4b5bx9679x585045ffca2f').checked;socket.send(str); 
  } 
-
-  

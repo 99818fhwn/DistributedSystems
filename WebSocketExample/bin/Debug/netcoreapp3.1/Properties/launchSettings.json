@@ -18,7 +18,7 @@
     "web": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://192.168.0.59:5001;http://192.168.0.59:5000",
+      "applicationUrl": "https://192.168.43.130:5001;http://192.168.43.130:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -26,10 +26,14 @@
   }
 }
 //"applicationUrl": "https://192.168.0.103:5001;http://192.168.0.103:5000",
-
+//"":192.168.43.130
 //192.168.10.56
 
 //192.168.0.102
 //192.168.0.59
 
 //192.168.43.5
+//       "applicationUrl": "https://192.168.0.59:5001;http://192.168.0.59:5000",
+
+
+//"applicationUrl": "https://192.168.43.130:5001;http://192.168.43.130:5000",
