@@ -1,6 +1,6 @@
 # Distributed Systems
 # Server - Client architecture
-# Example of use: Motion sensor (connected to Esp32) activating a sound(or other) actuator (connected to Esp8266) when motion detected via defined pipeline
+Example of use: Motion sensor (connected to Esp32) activating a sound(or other) actuator (connected to Esp8266) when motion detected via defined pipeline. 
 
 Every device should define an Adapter for the server and put  .dll in the ./WebSocketExample/wwwroot/adapters
 
