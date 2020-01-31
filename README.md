@@ -1,4 +1,8 @@
-# DistributedSystems
+# Distributed Systems
+# Client-Server Architecture
+Example of use: Motion sensor (connected to Esp32) activating a sound(or other) actuator (connected to Esp8266) when motion detected via defined pipeline. 
+
+Every device should define an Adapter for the server and put  .dll in the ./WebSocketExample/wwwroot/adapters
 
 The Protcol is best described in the ProtocollObject.cs file. 
 The server dependent part is the string before the ';;' (double semicolon)
